@@ -15,12 +15,15 @@ interface CountryDAO {
     fun getAllAbstracts(): List<Country>
 
 
-    @Query ("SELECT id, name , code, visited, favorite FROM country")
+    @Query ("SELECT id, name , code, visited, favorite FROM country WHERE favorite=1  ")
     fun getFavoriteAbstracts(): List<Country>
 
 
     @Query("SELECT * FROM country WHERE code LIKE :code")
     fun findBycode(code: String): Country
+
+    @Query("SELECT * FROM country WHERE id LIKE :id")
+    fun findByid(id: String): Country
 
     @Insert
     fun insertAll(vararg country: Country)

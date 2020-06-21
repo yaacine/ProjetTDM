@@ -10,6 +10,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        val iconName = resources.getResourceEntryName(R.drawable.ic_launcher_background)
+
+        println("icon name ===>"+ iconName)
         button.setOnClickListener {
 
         }
