@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "country",
+@Entity(tableName = "video",
      foreignKeys = [ForeignKey(
          entity = Country::class,
          parentColumns = ["countryId"],
