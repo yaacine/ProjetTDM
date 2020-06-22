@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Country (
 
     @ColumnInfo(name = "countryId")
-    @PrimaryKey(autoGenerate = true) var countryId: Int,
+    @PrimaryKey(autoGenerate = true) var countryId: Int ,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "code") var code: String,
     @ColumnInfo(name = "description") var description: String,
