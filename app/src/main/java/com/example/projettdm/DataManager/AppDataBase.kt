@@ -25,7 +25,7 @@ abstract class AppDatabase : RoomDatabase(){
     abstract fun TweetDao(): TweetDAO
 
 
-    companion object {
+  /*  companion object {
         @Volatile private var instance: AppDatabase? = null
         private val LOCK = Any()
 
@@ -36,5 +36,5 @@ abstract class AppDatabase : RoomDatabase(){
         private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
                 AppDatabase::class.java, "geomob.db")
             .build()
-    }
+    }*/
 }

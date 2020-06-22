@@ -1,10 +1,7 @@
 package com.example.projettdm.DataManager.Entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
+import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
-import androidx.room.PrimaryKey
 
 @Entity(tableName = "image",
     foreignKeys = [ForeignKey(
@@ -12,12 +9,13 @@ import androidx.room.PrimaryKey
         parentColumns = ["countryId"],
         childColumns = ["idCountry"],
         onDelete = CASCADE
-    )]
+    )],
+    indices = [Index(value = ["idCountry"])]
 )
 data class Image (
 
     @ColumnInfo(name = "imageId")
-    @PrimaryKey(autoGenerate = true) var id: Int,
+    @PrimaryKey(autoGenerate = true) var imageId: Int,
 
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "description") var description: String,
