@@ -16,16 +16,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        val db = Room.databaseBuilder(
+        val db = AppDatabase(this)
+/*        val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "appDB.db"
-        ).build()
+        ).build()*/
 
         GlobalScope.launch {
             db.CountryDao().insertAll(Country(name = "Algeria", code = "DZ" ,
                 description = "flutter run " , visited = false , favorite = false ,
-                flagSrc = "" , hymeSrc = "" , countryId = 2))
+                flagSrc = "" , hymeSrc = "" , countryId = 3))
 
             println("====> data added successfully")
 
@@ -46,4 +46,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
+
 }
