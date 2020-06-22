@@ -16,7 +16,6 @@ data class Video (
 
     @ColumnInfo(name = "videoId")
     @PrimaryKey(autoGenerate = true) var id: Int,
-
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "description") var description: String,
     @ColumnInfo(name = "resourceId") var resourceId: String,
