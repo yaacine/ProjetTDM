@@ -9,8 +9,8 @@ interface VideoDAO {
     @Query("SELECT * FROM video")
     fun getAll(): List<Video>
 
-    @Query("SELECT * FROM video WHERE idCountry LIKE :countryId")
-    fun findBycountry(countryId: String):  List<Country>
+    @Query("SELECT * FROM video WHERE idCountry LIKE :id")
+    fun findBycountry(id: String):  List<Video>
 
     @Insert
     fun insertAll(vararg video: Video)

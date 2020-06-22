@@ -17,26 +17,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "appDB.db"
-        ).build()
-
-      //  val db = AppDatabase(this)
-//
-//
-//        GlobalScope.launch {
-//            db.CountryDao().insertAll(Country(name = "Algeria", code = "DZ" ,
-//                description = "flutter run " , visted = false , favorite = false , flagSrc = "test" , hymeSrc = "test"))
-//            var data = db.CountryDao().getAll()
-//
-//            data?.forEach {
-//                println(it)
-//            }
-//        }
-        val iconName = resources.getResourceEntryName(R.drawable.ic_launcher_background)
-
-        println("icon name ===>"+ iconName)
         button.setOnClickListener {
 
             val intent = Intent(this, CountryDetails::class.java)
