@@ -15,7 +15,7 @@ import androidx.room.ForeignKey.CASCADE
 data class Image (
 
     @ColumnInfo(name = "imageId")
-    @PrimaryKey(autoGenerate = true) var id: Int,
+    @PrimaryKey(autoGenerate = true) var imageId: Int,
 
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "description") var description: String,
