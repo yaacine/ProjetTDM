@@ -7,8 +7,8 @@ import androidx.room.Room
 import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Entities.Country
 import kotlinx.android.synthetic.main.activity_main.*
-//import kotlinx.coroutines.GlobalScope
-//import kotlinx.coroutines.launch
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +17,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "appDB.db"
+        ).build()
+
+        GlobalScope.launch {
+            db.CountryDao().insertAll(Country(name = "Algeria", code = "DZ" ,
+                description = "flutter run " , visited = false , favorite = false ,
+                flagSrc = "" , hymeSrc = "" , countryId = 1))
+
+            println("====> data added successfully")
+
+            var data = db.CountryDao().getAll()
+            println("====> data retrieved successfully")
+            data?.forEach {
+                println(it)
+            }
+        }
         button.setOnClickListener {
 
             val intent = Intent(this, CountryDetails::class.java)
