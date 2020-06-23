@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch {
 
             var algeria = Country(
+                countryId = 1,
                 name = "Algeria",
                 code = "DZ" ,
                 description = "L'appellation « Algérie » provient du nom de la ville d'Alger. Le nom « Alger » dériverait du catalan Aljer, " +
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
 
 
             var tunisia = Country(
+                countryId = 2,
                 name = "Tunisia",
                 code = "TN" ,
                 description = "Tunisia,[a] officially the Republic of Tunisia,[b][18] is a country in the Maghreb region of North Africa, covering 163,610 square kilometres" +
@@ -102,6 +104,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             var saudia = Country(
+                countryId = 3,
                 name = "Tunisia",
                 code = "TN" ,
                 description = "is a country in Western Asia constituting the bulk of the Arabian Peninsula. With a land area of approximately 2,150,000 km2 (830,000 sq mi), " +
@@ -135,6 +138,32 @@ class MainActivity : AppCompatActivity() {
             val dz_img6 = Image("Image6 " , "description one ", resources.getResourceEntryName(R.drawable.dz_6),"yacine" , 1 )
             val dz_img7 = Image("Image7 " , "description one ", resources.getResourceEntryName(R.drawable.dz_7),"yacine" , 1 )
 
+            // inserting images
+            myDB.ImageDao().insertAll(dz_img1,dz_img2,dz_img3, dz_img4, dz_img5,dz_img6,dz_img7)
+
+            // tunisia
+            val tn_img1= Image("Image1 " , "description one ", resources.getResourceEntryName(R.drawable.tn_1),"yacine" , 2 )
+            val tn_img2= Image("Image2 " , "description one ", resources.getResourceEntryName(R.drawable.tn_2),"yacine" , 2 )
+            val tn_img3= Image("Image3 " , "description one ", resources.getResourceEntryName(R.drawable.tn_3),"yacine" , 2 )
+            val tn_img4= Image("Image4 " , "description one ", resources.getResourceEntryName(R.drawable.tn_4),"yacine" , 2 )
+            val tn_img5= Image("Image5 " , "description one ", resources.getResourceEntryName(R.drawable.tn_5),"yacine" , 2 )
+            val tn_img6= Image("Image6 " , "description one ", resources.getResourceEntryName(R.drawable.tn_6),"yacine" , 2 )
+            val tn_img7= Image("Image7 " , "description one ", resources.getResourceEntryName(R.drawable.tn_7),"yacine" , 2 )
+
+            // inserting images
+            myDB.ImageDao().insertAll(tn_img1,tn_img2,tn_img3,tn_img4, tn_img5, tn_img6, tn_img7)
+
+            // saudi arabia
+            val sa_img1= Image("Image1 " , "description one ", resources.getResourceEntryName(R.drawable.sa_1),"yacine" , 3 )
+            val sa_img2= Image("Image2 " , "description one ", resources.getResourceEntryName(R.drawable.sa_2),"yacine" , 3 )
+            val sa_img3= Image("Image3 " , "description one ", resources.getResourceEntryName(R.drawable.sa_3),"yacine" , 3 )
+            val sa_img4= Image("Image4 " , "description one ", resources.getResourceEntryName(R.drawable.sa_4),"yacine" , 3 )
+            val sa_img5= Image("Image5 " , "description one ", resources.getResourceEntryName(R.drawable.sa_5),"yacine" , 3 )
+            val sa_img6= Image("Image6 " , "description one ", resources.getResourceEntryName(R.drawable.sa_6),"yacine" , 3 )
+            val sa_img7= Image("Image7 " , "description one ", resources.getResourceEntryName(R.drawable.sa_7),"yacine" , 3 )
+
+            // inserting images
+            myDB.ImageDao().insertAll(sa_img1,sa_img2,sa_img3,sa_img4, sa_img5 ,sa_img6,sa_img7)
 
 
             println("====> data added successfully")
