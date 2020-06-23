@@ -24,8 +24,12 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             db.CountryDao().insertAll(Country(name = "Algeria", code = "DZ" ,
-                description = "flutter run " , visited = false , favorite = false ,
-                flagSrc = "" , hymeSrc = "" , countryId = 3))
+                description = "flutter run " , history = "algeira", visited = false , favorite = false ,
+                flagSrc = "" , hymeSrc = "" ))
+
+            db.CountryDao().insertAll(Country(name = "ksa", code = "DZ" ,
+                description = "flutter run " , history = "algeira", visited = false , favorite = false ,
+                flagSrc = "" , hymeSrc = "" ))
 
             println("====> data added successfully")
 
@@ -36,9 +40,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val iconName = resources.getResourceEntryName(R.drawable.ic_launcher_background)
 
+        val iconName = resources.getResourceEntryName(R.drawable.ic_launcher_background)
         println("icon name ===>"+ iconName)
+
 
         button.setOnClickListener {
 

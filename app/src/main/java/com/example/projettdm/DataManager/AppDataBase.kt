@@ -16,7 +16,7 @@ import com.example.projettdm.DataManager.Entities.Video
 
 @Database(
     entities = [Country::class, Video::class , Image::class , Tweet::class],
-    version = 1
+    version = 2
 )
 abstract class AppDatabase : RoomDatabase(){
     abstract fun CountryDao(): CountryDAO
@@ -35,6 +35,7 @@ abstract class AppDatabase : RoomDatabase(){
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
                 AppDatabase::class.java, "geomob.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 }
