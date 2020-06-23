@@ -4,25 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.projettdm.DataManager.Dao.CountryDAO
-import com.example.projettdm.DataManager.Dao.ImageDAO
-import com.example.projettdm.DataManager.Dao.TweetDAO
-import com.example.projettdm.DataManager.Dao.VideoDAO
-import com.example.projettdm.DataManager.Entities.Country
-import com.example.projettdm.DataManager.Entities.Image
-import com.example.projettdm.DataManager.Entities.Tweet
-import com.example.projettdm.DataManager.Entities.Video
+import com.example.projettdm.DataManager.Dao.*
+import com.example.projettdm.DataManager.Entities.*
 
 
 @Database(
-    entities = [Country::class, Video::class , Image::class , Tweet::class],
-    version = 2
+    entities = [Country::class, Video::class , Image::class , Tweet::class , Personnality::class],
+    version = 3
 )
 abstract class AppDatabase : RoomDatabase(){
     abstract fun CountryDao(): CountryDAO
     abstract fun VideoDao(): VideoDAO
     abstract fun ImageDao(): ImageDAO
     abstract fun TweetDao(): TweetDAO
+    abstract fun PersonnalityDAO(): PersonnalityDAO
 
 
     companion object {
