@@ -25,4 +25,8 @@ data class Tweet (
     @ColumnInfo(name = "idCountry") var idCountry:  Int
 
 
-)
+){
+    @Ignore
+    constructor(title: String, description: String , resourceId: String, owner: String, idCountry: Int) :
+            this(0, title, description, resourceId, owner,idCountry)
+}

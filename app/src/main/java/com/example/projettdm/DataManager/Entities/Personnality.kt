@@ -27,4 +27,8 @@ data class Personnality (
     @ColumnInfo(name = "idCountry") var idCountry:  Int
 
 
-)
+){
+    @Ignore
+    constructor(name: String, description: String , resourceId: String, link: String, idCountry: Int) :
+            this(0, name, description, resourceId, link,idCountry)
+}
