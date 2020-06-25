@@ -20,7 +20,11 @@ class MainActivity : AppCompatActivity() {
         val db = AppDatabase(this)
 
 
-        GlobalScope.launch {
+        populateDatabase(db)
+
+
+        /*
+          GlobalScope.launch {
             db.CountryDao().insertAll(Country(name = "Algeria", code = "DZ" ,
                 description = "flutter run " , history = "algeira", visited = false , favorite = false ,
                 flagSrc = "" , hymeSrc = "" ))
@@ -37,8 +41,7 @@ class MainActivity : AppCompatActivity() {
                 println(it)
             }
         }
-
-
+        */
         val iconName = resources.getResourceEntryName(R.drawable.ic_launcher_background)
         println("icon name ===>"+ iconName)
 
@@ -55,6 +58,8 @@ class MainActivity : AppCompatActivity() {
 
     fun populateDatabase(myDB: AppDatabase){
         GlobalScope.launch {
+
+            myDB.clearAllTables()
 
             var algeria = Country(
                 countryId = 1,
