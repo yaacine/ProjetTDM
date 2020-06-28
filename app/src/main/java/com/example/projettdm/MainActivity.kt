@@ -10,12 +10,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.room.Room
 import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Image
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -36,6 +35,10 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
 
 
+        button.setOnClickListener {
+            val intent = Intent(this, CountryDetails::class.java)
+            startActivity(intent)
+        }
         toolbar = findViewById(R.id.toolbar)
 
         setSupportActionBar(toolbar)
@@ -53,19 +56,19 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_profile -> {
+            R.id.nav_all -> {
                 Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
             }
-            R.id.nav_messages -> {
+            R.id.nav_favorite -> {
                 Toast.makeText(this, "Messages clicked", Toast.LENGTH_SHORT).show()
             }
-            R.id.nav_friends -> {
+            R.id.nav_visited -> {
                 Toast.makeText(this, "Friends clicked", Toast.LENGTH_SHORT).show()
             }
-            R.id.nav_update -> {
+            R.id.nav_share -> {
                 Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show()
             }
-            R.id.nav_logout -> {
+            R.id.nav_about -> {
                 Toast.makeText(this, "Sign out clicked", Toast.LENGTH_SHORT).show()
             }
         }
