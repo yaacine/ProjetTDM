@@ -23,17 +23,14 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     lateinit var toolbar: Toolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView: NavigationView
+    lateinit var adapter: CountryListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val db = AppDatabase(this)
-
-
         populateDatabase(db)
-
-
 
         button.setOnClickListener {
             val intent = Intent(this, CountryDetails::class.java)
