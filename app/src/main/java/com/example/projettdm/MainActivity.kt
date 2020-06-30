@@ -29,14 +29,25 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val db = AppDatabase(this)
         populateDatabase(db)
+
+        DataHolder.dbReference = db
+
+        GlobalScope.launch {
+            var myDataList = db.CountryDao().getAll()
+            DataHolder.countriesList.addAll(myDataList)
+        }
+
+        adapter = CountryListAdapter(this, R.layout.row, DataHolder.countriesList)
 
         button.setOnClickListener {
             val intent = Intent(this, CountryDetails::class.java)
             startActivity(intent)
         }
         toolbar = findViewById(R.id.toolbar)
+
 
         setSupportActionBar(toolbar)
 

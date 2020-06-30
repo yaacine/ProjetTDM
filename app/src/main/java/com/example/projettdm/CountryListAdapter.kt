@@ -27,31 +27,31 @@ class CountryListAdapter(
         var deleteBtn: TextView = view.findViewById(R.id.deleteBtn)
         var editBtn: TextView = view.findViewById(R.id.editBtn)
 
-        var intervention: Intervention? = items?.get(position)
+        var country: Country? = items?.get(position)
 
         //       imageView.setImageDrawable(mCtx.resources.getDrawable(1,null))
-        textView.text = intervention?.numero + " " + intervention?.nomPmobier?.toUpperCase()
-        textView1.text = intervention?.date.toString() + " " + intervention?.type?.toUpperCase()
+        textView.text = country?.code + " " + country?.name?.toUpperCase()
+        textView1.text = country?.description.toString()
 
         deleteBtn.setOnClickListener {
             println("we are deleting some stuff")
-            //DataManager.interventionsList.remove(items?.get(position))
+            //DataManager.countrysList.remove(items?.get(position))
 
 
             GlobalScope.launch {
 
                 var myDataList =
                     items?.get(position)?.let { it1 ->
-                        DataManager.dbReference.interventionDao().delete(
+                        DataHolder.dbReference.CountryDao().delete(
                             it1
                         )
                     }
-
+/*
                 var myDataNewList =  DataManager.dbReference.interventionDao().getAll()
                 DataManager.interventionsList.clear()
                 println("deleted ====>"+ myDataNewList.size)
                 DataManager.interventionsList.addAll(myDataNewList)
-
+*/
             }.invokeOnCompletion {
 
                 var activity = (context as MainActivity)
