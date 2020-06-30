@@ -11,7 +11,7 @@ interface ImageDAO {
     fun getAll(): List<Image>
 
     @Query("SELECT * FROM image WHERE idCountry LIKE :countryId")
-    fun findBycountry(countryId: String):  List<Image>
+    fun findBycountry(countryId: Int):  List<Image>
 
     @Insert
     fun insertAll(vararg image: Image)

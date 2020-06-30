@@ -51,4 +51,6 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation 'androidx.fragment:fragment-ktx:1.0.0'
 
+    implementation 'io.github.ivanespitiac:imageslider:1.0.3'
+
 }

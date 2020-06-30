@@ -19,7 +19,7 @@ data class Image (
 
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "description") var description: String,
-    @ColumnInfo(name = "resourceId") var resourceId: String,
+    @ColumnInfo(name = "resourceId") var resourceId: Int,
     @ColumnInfo(name = "owner") var owner: String,
 
     @ColumnInfo(name = "idCountry") var idCountry:  Int
@@ -27,6 +27,6 @@ data class Image (
 
 ){
     @Ignore
-    constructor(title: String, description: String , resourceId: String, owner: String, idCountry: Int) :
+    constructor(title: String, description: String , resourceId: Int, owner: String, idCountry: Int) :
             this(0, title, description, resourceId, owner,idCountry)
 }

@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         */
 
 
-      //  val iconName = resources.getResourceEntryName(R.drawable.ic_launcher_background)
+      //  val iconName = (R.drawable.ic_launcher_background)
         //println("icon name ===>"+ iconName)
 
 
@@ -134,8 +134,10 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         "comme Medracen, Mausolée royal de Maurétanie,",
                 visited = false ,
                 favorite = false ,
-                flagSrc = resources.getResourceEntryName(R.drawable.dz_flag) ,
-                hymeSrc = resources.getResourceEntryName(R.drawable.ic_launcher_background))
+                population = 20000000,
+                surface = 2150 ,
+                flagSrc = (R.drawable.dz_flag) ,
+                hymeSrc = (R.raw.hyme_algeria))
 
 
             var tunisia = Country(
@@ -159,13 +161,15 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         " semi-nomadic until the reign of Masinissa of the Massyli tribe",
                 visited = false ,
                 favorite = false ,
-                flagSrc = resources.getResourceEntryName(R.drawable.tn_flag) ,
-                hymeSrc = resources.getResourceEntryName(R.drawable.ic_launcher_background)
+                population = 20000000,
+                surface = 2150 ,
+                flagSrc = (R.drawable.tn_flag) ,
+                hymeSrc = (R.raw.hyme_tunisia)
             )
 
             var saudia = Country(
                 countryId = 3,
-                name = "Tunisia",
+                name = "Saudia arabia",
                 code = "TN" ,
                 description = "is a country in Western Asia constituting the bulk of the Arabian Peninsula. With a land area of approximately 2,150,000 km2 (830,000 sq mi), " +
                         "Saudi Arabia is geographically the largest sovereign state in Western Asia, the second-largest in the Arab world (after Algeria), the fifth-largest in Asia," +
@@ -180,8 +184,10 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         " Paleolithic record, and the quantity of Oldowan-like sites in the region indicate a significant role that Arabia had played in the early hominin colonization of Eurasia.[51]",
                 visited = false ,
                 favorite = false ,
-                flagSrc = resources.getResourceEntryName(R.drawable.sa_flag),
-                hymeSrc = resources.getResourceEntryName(R.drawable.ic_launcher_background)
+                population = 20000000,
+                surface = 2150 ,
+                flagSrc = (R.drawable.sa_flag),
+                hymeSrc = (R.raw.hyme_saudi)
             )
 
 
@@ -190,37 +196,37 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
             // defining images for countries
             // algeria
-            val dz_img1 = Image("Image1 " , "description one ", resources.getResourceEntryName(R.drawable.dz_1),"yacine" , 1 )
-            val dz_img2 = Image("Image2 " , "description one ", resources.getResourceEntryName(R.drawable.dz_2),"yacine" , 1 )
-            val dz_img3 = Image("Image3 " , "description one ", resources.getResourceEntryName(R.drawable.dz_3),"yacine" , 1 )
-            val dz_img4 = Image("Image4 " , "description one ", resources.getResourceEntryName(R.drawable.dz_4),"yacine" , 1 )
-            val dz_img5 = Image("Image5 " , "description one ", resources.getResourceEntryName(R.drawable.dz_5),"yacine" , 1 )
-            val dz_img6 = Image("Image6 " , "description one ", resources.getResourceEntryName(R.drawable.dz_6),"yacine" , 1 )
-            val dz_img7 = Image("Image7 " , "description one ", resources.getResourceEntryName(R.drawable.dz_7),"yacine" , 1 )
+            val dz_img1 = Image("Image1 " , "description one ", (R.drawable.dz_1),"yacine" , 1 )
+            val dz_img2 = Image("Image2 " , "description one ", (R.drawable.dz_2),"yacine" , 1 )
+            val dz_img3 = Image("Image3 " , "description one ", (R.drawable.dz_3),"yacine" , 1 )
+            val dz_img4 = Image("Image4 " , "description one ", (R.drawable.dz_4),"yacine" , 1 )
+            val dz_img5 = Image("Image5 " , "description one ", (R.drawable.dz_5),"yacine" , 1 )
+            val dz_img6 = Image("Image6 " , "description one ", (R.drawable.dz_6),"yacine" , 1 )
+            val dz_img7 = Image("Image7 " , "description one ", (R.drawable.dz_7),"yacine" , 1 )
 
             // inserting images
             myDB.ImageDao().insertAll(dz_img1,dz_img2,dz_img3, dz_img4, dz_img5,dz_img6,dz_img7)
 
             // tunisia
-            val tn_img1= Image("Image1 " , "description one ", resources.getResourceEntryName(R.drawable.tn_1),"yacine" , 2 )
-            val tn_img2= Image("Image2 " , "description one ", resources.getResourceEntryName(R.drawable.tn_2),"yacine" , 2 )
-            val tn_img3= Image("Image3 " , "description one ", resources.getResourceEntryName(R.drawable.tn_3),"yacine" , 2 )
-            val tn_img4= Image("Image4 " , "description one ", resources.getResourceEntryName(R.drawable.tn_4),"yacine" , 2 )
-            val tn_img5= Image("Image5 " , "description one ", resources.getResourceEntryName(R.drawable.tn_5),"yacine" , 2 )
-            val tn_img6= Image("Image6 " , "description one ", resources.getResourceEntryName(R.drawable.tn_6),"yacine" , 2 )
-            val tn_img7= Image("Image7 " , "description one ", resources.getResourceEntryName(R.drawable.tn_7),"yacine" , 2 )
+            val tn_img1= Image("Image1 " , "description one ", (R.drawable.tn_1),"yacine" , 2 )
+            val tn_img2= Image("Image2 " , "description one ", (R.drawable.tn_2),"yacine" , 2 )
+            val tn_img3= Image("Image3 " , "description one ", (R.drawable.tn_3),"yacine" , 2 )
+            val tn_img4= Image("Image4 " , "description one ", (R.drawable.tn_4),"yacine" , 2 )
+            val tn_img5= Image("Image5 " , "description one ", (R.drawable.tn_5),"yacine" , 2 )
+            val tn_img6= Image("Image6 " , "description one ", (R.drawable.tn_6),"yacine" , 2 )
+            val tn_img7= Image("Image7 " , "description one ", (R.drawable.tn_7),"yacine" , 2 )
 
             // inserting images
             myDB.ImageDao().insertAll(tn_img1,tn_img2,tn_img3,tn_img4, tn_img5, tn_img6, tn_img7)
 
             // saudi arabia
-            val sa_img1= Image("Image1 " , "description one ", resources.getResourceEntryName(R.drawable.sa_1),"yacine" , 3 )
-            val sa_img2= Image("Image2 " , "description one ", resources.getResourceEntryName(R.drawable.sa_2),"yacine" , 3 )
-            val sa_img3= Image("Image3 " , "description one ", resources.getResourceEntryName(R.drawable.sa_3),"yacine" , 3 )
-            val sa_img4= Image("Image4 " , "description one ", resources.getResourceEntryName(R.drawable.sa_4),"yacine" , 3 )
-            val sa_img5= Image("Image5 " , "description one ", resources.getResourceEntryName(R.drawable.sa_5),"yacine" , 3 )
-            val sa_img6= Image("Image6 " , "description one ", resources.getResourceEntryName(R.drawable.sa_6),"yacine" , 3 )
-            val sa_img7= Image("Image7 " , "description one ", resources.getResourceEntryName(R.drawable.sa_7),"yacine" , 3 )
+            val sa_img1= Image("Image1 " , "description one ", (R.drawable.sa_1),"yacine" , 3 )
+            val sa_img2= Image("Image2 " , "description one ", (R.drawable.sa_2),"yacine" , 3 )
+            val sa_img3= Image("Image3 " , "description one ", (R.drawable.sa_3),"yacine" , 3 )
+            val sa_img4= Image("Image4 " , "description one ", (R.drawable.sa_4),"yacine" , 3 )
+            val sa_img5= Image("Image5 " , "description one ", (R.drawable.sa_5),"yacine" , 3 )
+            val sa_img6= Image("Image6 " , "description one ", (R.drawable.sa_6),"yacine" , 3 )
+            val sa_img7= Image("Image7 " , "description one ", (R.drawable.sa_7),"yacine" , 3 )
 
             // inserting images
             myDB.ImageDao().insertAll(sa_img1,sa_img2,sa_img3,sa_img4, sa_img5 ,sa_img6,sa_img7)

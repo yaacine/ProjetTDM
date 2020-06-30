@@ -6,5 +6,10 @@
     <string name="information">Infos</string>
     <string name="tweets">Tweets</string>
     <string name="videos">Videos</string>
+    <string name="description_test">Certainly having multiple Scrol
+        lViews on a screen is not an issue; the parent layout simply needs to be arranged so they al
+        l have room on the screen. As for one ScrollView inside another, that difficult. Instead, the Android compatibility lib
+        rary has NestedScrol
+        lView. There are lots of tutorials on the web for how to use NestedScrollView for that application. – Ted Hopp Dec </string>
 
 </resources>
