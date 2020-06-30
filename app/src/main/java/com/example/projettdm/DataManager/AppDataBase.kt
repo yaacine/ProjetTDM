@@ -10,7 +10,7 @@ import com.example.projettdm.DataManager.Entities.*
 
 @Database(
     entities = [Country::class, Video::class , Image::class , Tweet::class , Personnality::class],
-    version = 3
+    version = 5
 )
 abstract class AppDatabase : RoomDatabase(){
     abstract fun CountryDao(): CountryDAO
