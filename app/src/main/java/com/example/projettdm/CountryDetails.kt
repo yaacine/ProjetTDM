@@ -1,21 +1,17 @@
 package com.example.projettdm
 
 
-import android.content.Context
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_country_details.*
-import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
-import com.example.projettdm.SlideAdapter.SlideShowAdapter
 
 
 class CountryDetails : AppCompatActivity() {
     var navigationView: BottomNavigationView? = null
-    var country_id = 1
-    var adapter_slides:SlideShowAdapter?=null
+    var country_id = 3
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +28,6 @@ class CountryDetails : AppCompatActivity() {
                 R.id.navigation_sms-> {
                     title=resources.getString(R.string.information)
                     loadFragment(InformationFragment())
-                    var mPage:ViewPager = findViewById(R.id.slider)
-                    mPage.adapter = SlideShowAdapter(this.applicationContext)
-
                     return@setOnNavigationItemSelectedListener true
                 }
 
@@ -57,9 +50,14 @@ class CountryDetails : AppCompatActivity() {
 
     }
 
+    // updated load fragment to pass id to fragments
     private fun loadFragment(fragment: Fragment) {
         // load fragment
+        val bundle = Bundle()
+        bundle.putInt("country_id",this.country_id) // country is an attribute
+
         val transaction = supportFragmentManager.beginTransaction()
+        fragment.arguments = bundle // arguments passed
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()

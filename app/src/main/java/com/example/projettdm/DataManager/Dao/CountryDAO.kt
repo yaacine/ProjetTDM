@@ -23,6 +23,9 @@ interface CountryDAO {
     @Query("SELECT * FROM country WHERE code LIKE :code")
     fun findBycode(code: String): Country
 
+    @Query("select * from country where countryId=:id")
+    fun findById(id:Int): Country
+
 
     @Insert
     fun insertAll(vararg country: Country)

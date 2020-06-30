@@ -1,16 +1,23 @@
 package com.example.projettdm
 
-import android.content.Context
+import android.annotation.SuppressLint
+import android.content.ContentResolver
+import android.media.MediaPlayer
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager.widget.PagerAdapter
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.example.projettdm.SlideAdapter.SlideShowAdapter
+import com.example.projettdm.DataManager.AppDatabase
+import com.example.projettdm.DataManager.Dao.CountryDAO
+import com.example.projettdm.DataManager.Dao.ImageDAO
+import com.example.projettdm.DataManager.Entities.Country
 import kotlinx.android.synthetic.main.fragment_information.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,8 +36,21 @@ class InformationFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    var adapter: SlideShowAdapter? =null
-    var viewPager:ViewPager? = null
+
+    private var country_id:Int = 0
+    private var country: Country? = null
+    private var ImagesList : MutableList<Int> = mutableListOf()
+
+    private var databse: AppDatabase? = null
+    private var country_dao : CountryDAO ? = null
+    private var image_dao : ImageDAO ? = null
+
+    private lateinit var mediaPlayer: MediaPlayer
+    private var started: Boolean = false
+    private var playing: Boolean = false
+    private var point:Int = 0
+
+
 
 
 
@@ -57,6 +77,65 @@ class InformationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+         arguments!!.getInt("country_id").let {it->
+            Log.d(" Country_id_fount",it.toString())
+            this.country_id = it
+
+        }
+        val active = this ;
+        val luncher = @SuppressLint("StaticFieldLeak")
+        object : AsyncTask<Void, Void, Void>() {
+
+            override fun doInBackground(vararg params: Void?): Void? {
+                //in background
+                //active
+                active.databse = AppDatabase.invoke(context!!)
+
+                active.country_dao = active.databse?.CountryDao()
+                active.image_dao = active.databse?.ImageDao()
+                if(active.country_id>0){
+
+                    active.country = active.country_dao?.findById(active.country_id)
+                    active.image_dao?.findBycountry(active.country_id)?.forEach { i->
+                        active.ImagesList.add(i.resourceId)
+                    }
+
+                }
+                else{
+                    Log.e(" country_id "," not available during fetch from db ")
+                }
+
+
+                return null
+            }
+
+            override fun onPostExecute(result: Void?) {
+
+                mediaPlayer = MediaPlayer.create(context, country?.hymeSrc!!)
+                    txt_description.text = country?.description
+                    txt_histoire.text = country?.history
+                    txt_nom.text = country?.name
+                    txt_population.text = country?.population.toString()
+                    txt_surface.text = country?.surface.toString()
+                    img_flag.setImageResource(country?.flagSrc!!)
+
+
+                var ls:MutableList<String> = mutableListOf()
+                ImagesList.forEach { i->
+                    ls.add(uri_from_ressource(i).toString())
+                }
+
+                //val uri = uri_from_ressource(R.drawable.dz_2)
+               // val uri1 = uri_from_ressource(R.drawable.dz_3)
+
+                //var ls = arrayOf(uri.toString(),uri1.toString())
+                slider.setItems(ls.toList())
+                slider.getIndicator()
+            }
+
+        }
+        luncher.execute()
+
 
         return inflater.inflate(R.layout.fragment_information, container, false)
 
@@ -66,11 +145,44 @@ class InformationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        btn_play.setOnClickListener{
+
+            if(!started){
+                //mediaPlayer = MediaPlayer.create(context, R.raw.hyme_algeria)
+                mediaPlayer.isLooping = true
+                mediaPlayer.start()
+                started = true
+                playing = true
+                btn_play.text = " Pause "
+            }
+            else{
+                if(playing){
+                    mediaPlayer.pause();
+                   point = mediaPlayer.currentPosition;
+                    btn_play.text =" Reprendre "
+                }
+                else{
+                    mediaPlayer.seekTo(point);
+                    mediaPlayer.start();
+                    btn_play.text = " Suspendre "
+                }
+                playing = !playing
+            }
+
+        }
+
 
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+       /* val uri = uri_from_ressource(R.drawable.dz_2)
+        val uri1 = uri_from_ressource(R.drawable.dz_3)
+
+        var ls = arrayOf(uri.toString(),uri1.toString())
+        slider.setItems(ls.toList())
+        slider.getIndicator() */
 
     }
 
@@ -129,4 +241,16 @@ class InformationFragment : Fragment() {
                 }
             }
     }
+
+    fun  uri_from_ressource(i:Int):Uri{
+        val uri1 = Uri.Builder()
+            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+            .authority(resources.getResourcePackageName(i))
+            .appendPath(resources.getResourceTypeName(i))
+            .appendPath(resources.getResourceEntryName(i))
+            .build()
+        return uri1
+    }
 }
+
+
