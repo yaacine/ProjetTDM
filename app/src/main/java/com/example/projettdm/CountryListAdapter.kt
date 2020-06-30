@@ -1,14 +1,17 @@
 package com.example.projettdm
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import com.example.projettdm.DataManager.Entities.Country
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 class CountryListAdapter(
     var mCtx: Context, var resource: Int,
@@ -21,17 +24,22 @@ class CountryListAdapter(
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
 
         val view: View = layoutInflater.inflate(resource, null)
-        val imageView: ImageView = view.findViewById(R.id.iconIv)
-        var textView: TextView = view.findViewById(R.id.titleIntervention)
-        var textView1: TextView = view.findViewById(R.id.plombierIntervention)
+        val imageView: ImageView = view.findViewById(R.id.flagList)
+        var name: TextView = view.findViewById(R.id.titleIntervention)
+        var description: TextView = view.findViewById(R.id.plombierIntervention)
         var deleteBtn: TextView = view.findViewById(R.id.deleteBtn)
         var editBtn: TextView = view.findViewById(R.id.editBtn)
 
         var country: Country? = items?.get(position)
 
+
+        val uri = country?.flagSrc
+        val myres: Drawable = mCtx.getResources().getDrawable(uri!!)
+        imageView.setImageDrawable(myres)
+
         //       imageView.setImageDrawable(mCtx.resources.getDrawable(1,null))
-        textView.text = country?.code + " " + country?.name?.toUpperCase()
-        textView1.text = country?.description.toString()
+        name.text = country?.name + "  |  " + country?.code ?.toUpperCase()
+        description.text = country?.description.toString()
 
         deleteBtn.setOnClickListener {
             println("we are deleting some stuff")

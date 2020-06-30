@@ -32,15 +32,21 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         val db = AppDatabase(this)
         populateDatabase(db)
-
         DataHolder.dbReference = db
+
+
+        adapter = CountryListAdapter(this, R.layout.row, DataHolder.countriesList)
+        listView.adapter = adapter
 
         GlobalScope.launch {
             var myDataList = db.CountryDao().getAll()
             DataHolder.countriesList.addAll(myDataList)
+            println("we got our data ===>"+ DataHolder.countriesList.size)
+        }.invokeOnCompletion {
+            adapter.notifyDataSetChanged()
         }
 
-        adapter = CountryListAdapter(this, R.layout.row, DataHolder.countriesList)
+
 
         button.setOnClickListener {
             val intent = Intent(this, CountryDetails::class.java)
@@ -65,13 +71,13 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_all -> {
-                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "All Countries", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_favorite -> {
-                Toast.makeText(this, "Messages clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Favorite Countries", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_visited -> {
-                Toast.makeText(this, "Friends clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Visisted Countries", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_share -> {
                 Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show()
@@ -178,7 +184,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             var saudia = Country(
                 countryId = 3,
                 name = "Saudia arabia",
-                code = "TN" ,
+                code = "SA" ,
                 description = "is a country in Western Asia constituting the bulk of the Arabian Peninsula. With a land area of approximately 2,150,000 km2 (830,000 sq mi), " +
                         "Saudi Arabia is geographically the largest sovereign state in Western Asia, the second-largest in the Arab world (after Algeria), the fifth-largest in Asia," +
                         " and the 12th-largest in the world. Saudi Arabia is bordered by Jordan and Iraq to the north, Kuwait to the northeast, Qatar, Bahrain, and the United Arab Emirates to the east," +
