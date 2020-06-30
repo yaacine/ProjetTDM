@@ -1,14 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginBottom="100dp"
     tools:context=".InformationFragment">
 
     <!-- TODO: Update blank fragment layout -->
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="60dp"
+       android:text="Algerie"
+       android:textSize="40dp"
+       android:textColor="#ffff"
+       android:id="@+id/txt_nom"
+       android:textAlignment="center"
+       android:background="@color/colorPrimary"
+       android:fontFamily="sans-serif-medium"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:id="@+id/img_flag"
+        android:src="@drawable/dz_flag"
+        android:contentDescription="Algeria" />
+
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="20dp"
+            android:id="@+id/btn_play"
+            android:layout_margin="20dp"
+            android:background="@drawable/play_button"
+            android:text="Ecouter l'hyme nationale" />
+
+    <LinearLayout
+        android:background="@drawable/grouping_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#002148"
+            android:layout_height="wrap_content"
+            android:text="Informations :"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:text="Population :"
+                android:fontFamily="sans-serif-black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="1000000"
+                android:textSize="20dp"
+                android:id="@+id/txt_population"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:textSize="20dp"
+                android:text="Surface [KM carré ] :"
+                android:fontFamily="sans-serif-black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="1000000"
+                android:textSize="20dp"
+                android:id="@+id/txt_surface"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:background="@drawable/grouping_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="10dp"
+
+            android:fontFamily="sans-serif-black"
+            android:textColor="#002148"
+            android:layout_height="wrap_content"
+            android:text="Description :"
+            android:textSize="25dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/description_test"
+                android:textSize="22dp"
+                android:id="@+id/txt_description"
+                android:layout_margin="20dp"
+                 />
+
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:background="@drawable/grouping_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="10dp"
+
+            android:fontFamily="sans-serif-black"
+            android:textColor="#002148"
+            android:layout_height="wrap_content"
+            android:text="Histoire :"
+            android:textSize="25dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description_test"
+            android:textSize="22dp"
+            android:id="@+id/txt_histoire"
+            android:layout_margin="20dp"
+            />
+
+
+
+
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text=" Défilez les images du pays :"
+        android:padding="10dp"
+        android:fontFamily="sans-serif-black"
+        android:textColor="#002148"
+        android:textSize="26dp"/>
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@drawable/dz_flag"
+        android:id="@+id/slider"/>
 
-</FrameLayout>
+
+
+
+
+</LinearLayout>

@@ -134,6 +134,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         "comme Medracen, Mausolée royal de Maurétanie,",
                 visited = false ,
                 favorite = false ,
+                population = 20000000,
+                surface = 2150 ,
                 flagSrc = resources.getResourceEntryName(R.drawable.dz_flag) ,
                 hymeSrc = resources.getResourceEntryName(R.drawable.ic_launcher_background))
 
@@ -159,6 +161,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         " semi-nomadic until the reign of Masinissa of the Massyli tribe",
                 visited = false ,
                 favorite = false ,
+                population = 20000000,
+                surface = 2150 ,
                 flagSrc = resources.getResourceEntryName(R.drawable.tn_flag) ,
                 hymeSrc = resources.getResourceEntryName(R.drawable.ic_launcher_background)
             )
@@ -180,6 +184,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         " Paleolithic record, and the quantity of Oldowan-like sites in the region indicate a significant role that Arabia had played in the early hominin colonization of Eurasia.[51]",
                 visited = false ,
                 favorite = false ,
+                population = 20000000,
+                surface = 2150 ,
                 flagSrc = resources.getResourceEntryName(R.drawable.sa_flag),
                 hymeSrc = resources.getResourceEntryName(R.drawable.ic_launcher_background)
             )

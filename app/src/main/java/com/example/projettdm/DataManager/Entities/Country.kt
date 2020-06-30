@@ -16,11 +16,13 @@ data class Country (
     @ColumnInfo(name = "hymeSrc") var hymeSrc: String,
     @ColumnInfo(name = "flagSrc") var flagSrc: String,
     @ColumnInfo(name = "visited") var visited: Boolean,
-    @ColumnInfo(name = "favorite") var favorite: Boolean
+    @ColumnInfo(name = "favorite") var favorite: Boolean,
+    @ColumnInfo(name = "population") var population: Int,
+    @ColumnInfo(name = "surface") var surface: Int
 
 
 ){
     @Ignore
     constructor(name: String,code: String, history: String, hymeSrc: String,flagSrc: String,visited: Boolean,favorite: Boolean, description: String ) :
-            this(0, name, code, history, description, hymeSrc, flagSrc,visited, favorite)
+            this(0, name, code, history, description, hymeSrc, flagSrc,visited, favorite ,0,0)
 }
