@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Image
+import com.example.projettdm.DataManager.Entities.Video
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.GlobalScope
@@ -247,6 +248,12 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             data?.forEach {
                 println(it)
             }
+
+
+            val vid1 = Video(" video 1","decription",R.raw.algerie1,"me",1)
+            val vid2 = Video(" video ","decription",R.raw.algerie2,"me",1)
+
+            myDB.VideoDao().insertAll(vid1,vid2)
         }
     }
 }

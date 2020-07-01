@@ -18,7 +18,7 @@ data class Video (
     @PrimaryKey(autoGenerate = true) var id: Int,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "description") var description: String,
-    @ColumnInfo(name = "resourceId") var resourceId: String,
+    @ColumnInfo(name = "resourceId") var resourceId: Int,
     @ColumnInfo(name = "owner") var owner: String,
 
     @ColumnInfo(name = "idCountry") var idCountry:  Int
@@ -26,6 +26,6 @@ data class Video (
 
 ){
     @Ignore
-    constructor(title: String, description: String , resourceId: String, owner: String, idCountry: Int) :
+    constructor(title: String, description: String , resourceId: Int, owner: String, idCountry: Int) :
             this(0, title, description, resourceId, owner,idCountry)
 }
