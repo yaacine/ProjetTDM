@@ -2,6 +2,8 @@ package com.example.projettdm
 
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +23,9 @@ import com.example.projettdm.DataManager.Dao.CountryDAO
 import com.example.projettdm.DataManager.Dao.VideoDAO
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Video
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import kotlinx.android.synthetic.main.fragment_videos.*
 
 
@@ -40,12 +46,15 @@ class VideosFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var myContext: FragmentActivity? = null
     private var listener: OnFragmentInteractionListener? = null
 
     private var country_id:Int = 0
     private var country: Country? = null
     private var list_Video : MutableList<Video> = mutableListOf()
     private var youtube_list : MutableList<String> = mutableListOf()
+
+    private var youTubePlayer: YouTubePlayer? = null
 
     private var databse: AppDatabase? = null
     private var country_dao : CountryDAO? = null
@@ -129,13 +138,15 @@ class VideosFragment : Fragment() {
         lay_manager.stackFromEnd = true
         recyclerView.itemAnimator = DefaultItemAnimator()
 
+        /*
         val recycler2 = rootView.findViewById<View>(R.id.recycler_view_youtube) as RecyclerView
         val lay_manager2 = LinearLayoutManager(activity)
         recycler2.layoutManager = lay_manager2
         val mAdapter2 = YoutubeAdapter(listOf<String>("h") as MutableList<String>,context!!)
         recycler2.adapter = mAdapter2
         lay_manager2.stackFromEnd = true
-        recycler2.itemAnimator = DefaultItemAnimator()
+        recycler2.itemAnimator = DefaultItemAnimator() */
+
 
 
 
@@ -163,6 +174,11 @@ class VideosFragment : Fragment() {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
     }*/
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        myContext = activity as FragmentActivity
+
+    }
 
     override fun onDetach() {
         super.onDetach()
@@ -204,4 +220,38 @@ class VideosFragment : Fragment() {
                 }
             }
     }
+/*
+    private fun initializeYoutubePlayer() {
+
+        youTubePlayerFragment = fragmentManager
+            ?.findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerSupportFragment
+        if (youTubePlayerFragment == null) return
+        youTubePlayerFragment.initialize(
+            Constants.DEVELOPER_KEY,
+            object : YouTubePlayer.OnInitializedListener {
+                override fun onInitializationSuccess(
+                    provider: YouTubePlayer.Provider, player: YouTubePlayer,
+                    wasRestored: Boolean
+                ) {
+                    if (!wasRestored) {
+                        youTubePlayer = player
+
+                        //set the player style default
+                        youTubePlayer!!.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
+
+                        //cue the 1st video by default
+                        youTubePlayer!!.cueVideo(youtubeVideoArrayList.get(0))
+                    }
+                }
+
+                override fun onInitializationFailure(
+                    arg0: YouTubePlayer.Provider,
+                    arg1: YouTubeInitializationResult
+                ) {
+
+                    //print or show error if initialization failed
+                    Log.e(TAG, "Youtube Player View initialization failed")
+                }
+            })
+    } */
 }
