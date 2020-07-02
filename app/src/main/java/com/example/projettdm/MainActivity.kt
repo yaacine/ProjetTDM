@@ -250,7 +250,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             }
 
 
-            val vid1 = Video(" video 1","decription",R.raw.algerie1,"me",1)
+            val vid1 = Video(" video 1","decription",R.raw.algerie2,"me",1)
             val vid2 = Video(" video ","decription",R.raw.algerie2,"me",1)
 
             myDB.VideoDao().insertAll(vid1,vid2)
