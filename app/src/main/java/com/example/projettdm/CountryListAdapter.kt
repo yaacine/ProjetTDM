@@ -55,8 +55,16 @@ class CountryListAdapter(
                 DataHolder.dbReference.CountryDao().updateCountry(
                     country
                 )
-                if (country?.favorite!!) favoriteBtn.setBackgroundResource(R.drawable.ic_star_black_24dp)
-                else favoriteBtn.setBackgroundResource(R.drawable.ic_star_border_black_16dp)
+
+                var activity = (context as MainActivity)
+                activity.runOnUiThread(java.lang.Runnable {
+
+                    //activity.adapter.notifyDataSetChanged()
+                    if (country?.favorite!!) favoriteBtn.setBackgroundResource(R.drawable.ic_star_black_24dp)
+                    else favoriteBtn.setBackgroundResource(R.drawable.ic_star_border_black_16dp)
+
+
+                })
 
 
             }.invokeOnCompletion {
@@ -75,10 +83,8 @@ class CountryListAdapter(
 
 
 
-
-
         // Set a click listener for button widget
-        favoriteBtn.setOnClickListener {
+       // favoriteBtn.setOnClickListener {
 
             /*
         }
@@ -141,7 +147,7 @@ class CountryListAdapter(
                 0, // X offset
                 0 // Y offset
             )*/
-        }
+        //}
 
         return view
     }

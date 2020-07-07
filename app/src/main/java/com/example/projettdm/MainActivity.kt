@@ -77,19 +77,85 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_all -> {
-                Toast.makeText(this, "All Countries", Toast.LENGTH_SHORT).show()
+
+                try {
+                    GlobalScope.launch {
+                        var myDataList = DataHolder.dbReference.CountryDao().getAll()
+                        DataHolder.countriesList.clear()
+                        DataHolder.countriesList.addAll(myDataList)
+                        println("we got our data ===>"+ DataHolder.countriesList.size)
+                    }.invokeOnCompletion {
+
+                        this.runOnUiThread(Runnable {
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(this, "All Countries", Toast.LENGTH_SHORT).show()
+
+                        })
+
+
+                    }
+
+                }catch (err:Error){
+                    println("Error loading the data")
+                    Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
+                }
             }
             R.id.nav_favorite -> {
-                Toast.makeText(this, "Favorite Countries", Toast.LENGTH_SHORT).show()
+                try {
+                    GlobalScope.launch {
+                        var myDataList = DataHolder.dbReference.CountryDao().getAllFavorites()
+                        DataHolder.countriesList.clear()
+                        DataHolder.countriesList.addAll(myDataList)
+                        println("we got our data ===>"+ DataHolder.countriesList.size)
+                    }.invokeOnCompletion {
+
+                        this.runOnUiThread(Runnable {
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(this, "Favorite Countries", Toast.LENGTH_SHORT).show()
+
+
+                        })
+
+
+                    }
+
+                }catch (err:Error){
+                    println("Error loading the data")
+                    Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
+
+                }
+
             }
             R.id.nav_visited -> {
-                Toast.makeText(this, "Visisted Countries", Toast.LENGTH_SHORT).show()
+                try {
+                    GlobalScope.launch {
+                        var myDataList = DataHolder.dbReference.CountryDao().getAllVisited()
+                        DataHolder.countriesList.clear()
+                        DataHolder.countriesList.addAll(myDataList)
+                        println("we got our data ===>"+ DataHolder.countriesList.size)
+                    }.invokeOnCompletion {
+
+                        this.runOnUiThread(Runnable {
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(this, "Visisted Countries", Toast.LENGTH_SHORT).show()
+
+                        })
+
+
+                    }
+
+                }catch (err:Error){
+                    println("Error loading the data")
+                    Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
+
+
+                }
             }
             R.id.nav_share -> {
-                Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Comming soon!", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_about -> {
-                Toast.makeText(this, "Sign out clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Comming soon!", Toast.LENGTH_SHORT).show()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
@@ -155,7 +221,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                             "du Tassili que l'on considère comme le musée à ciel ouvert le plus étendu au monde. Plus tard, les Berbères construisirent plusieurs sites " +
                             "comme Medracen, Mausolée royal de Maurétanie,",
                     visited = false ,
-                    favorite = false ,
+                    favorite = true ,
                     population = 20000000,
                     surface = 2150 ,
                     flagSrc = (R.drawable.dz_flag) ,
