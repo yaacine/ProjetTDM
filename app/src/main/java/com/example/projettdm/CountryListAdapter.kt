@@ -2,12 +2,14 @@ package com.example.projettdm
 
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.projettdm.DataManager.Entities.Country
 import kotlinx.coroutines.GlobalScope
@@ -33,7 +35,13 @@ class CountryListAdapter(
 
         var country: Country? = items?.get(position)
 
+        var clickableSection: LinearLayout = view.findViewById(R.id.linearToClick)
 
+        clickableSection.setOnClickListener {
+            val intent = Intent(mCtx, CountryDetails::class.java)
+            intent.putExtra("countryId",country?.countryId.toString())
+            mCtx.startActivity(intent)
+        }
         val uri = country?.flagSrc
         val myres: Drawable = mCtx.getResources().getDrawable(uri!!)
         imageView.setImageDrawable(myres)

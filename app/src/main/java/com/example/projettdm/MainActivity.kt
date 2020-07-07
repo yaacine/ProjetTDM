@@ -55,7 +55,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
 
         button.setOnClickListener {
-            val intent = Intent(this, CountryDetails(1)::class.java)
+            val intent = Intent(this, CountryDetails::class.java)
+            intent.putExtra("countryId","3")
             startActivity(intent)
         }
         toolbar = findViewById(R.id.toolbar)
