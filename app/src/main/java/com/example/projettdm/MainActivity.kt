@@ -328,7 +328,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             myDB.VideoDao().insertAllYoutube(yt,yt2,yt3)
 
             myDB.VideoDao().insertAll(vid1,vid2,
-            Video(" Tourisme "," hello ",R.raw.russia,"yacine",4),
+            Video(" st petersburg "," hello ",R.raw.russia,"yacine",5),
                 Video(" Djarba "," hello ",R.raw.tunnis,"yacine",2)
             )
         }
