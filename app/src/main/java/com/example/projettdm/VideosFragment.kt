@@ -138,14 +138,14 @@ class VideosFragment : Fragment() {
         lay_manager.stackFromEnd = true
         recyclerView.itemAnimator = DefaultItemAnimator()
 
-        /*
+
         val recycler2 = rootView.findViewById<View>(R.id.recycler_view_youtube) as RecyclerView
         val lay_manager2 = LinearLayoutManager(activity)
         recycler2.layoutManager = lay_manager2
         val mAdapter2 = YoutubeAdapter(listOf<String>("h") as MutableList<String>,context!!)
         recycler2.adapter = mAdapter2
         lay_manager2.stackFromEnd = true
-        recycler2.itemAnimator = DefaultItemAnimator() */
+        recycler2.itemAnimator = DefaultItemAnimator()
 
 
 
