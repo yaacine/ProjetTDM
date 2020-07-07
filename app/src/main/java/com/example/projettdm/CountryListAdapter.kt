@@ -1,5 +1,6 @@
 package com.example.projettdm
 
+
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -27,8 +28,8 @@ class CountryListAdapter(
         val imageView: ImageView = view.findViewById(R.id.flagList)
         var name: TextView = view.findViewById(R.id.titleIntervention)
         var description: TextView = view.findViewById(R.id.plombierIntervention)
-        var deleteBtn: TextView = view.findViewById(R.id.deleteBtn)
-        var editBtn: TextView = view.findViewById(R.id.editBtn)
+
+        var favoriteBtn: TextView = view.findViewById(R.id.favoriteBtn)
 
         var country: Country? = items?.get(position)
 
@@ -41,25 +42,23 @@ class CountryListAdapter(
         name.text = country?.name + "  |  " + country?.code ?.toUpperCase()
         description.text = country?.description.toString()
 
-        deleteBtn.setOnClickListener {
+        if (country?.favorite!!) favoriteBtn.setBackgroundResource(R.drawable.ic_star_black_24dp)
+        else favoriteBtn.setBackgroundResource(R.drawable.ic_star_border_black_16dp)
+
+        println("ayizem")
+
+        favoriteBtn.setOnClickListener {
             println("we are deleting some stuff")
             //DataManager.countrysList.remove(items?.get(position))
-
-
             GlobalScope.launch {
+                country.favorite = !country.favorite
+                DataHolder.dbReference.CountryDao().updateCountry(
+                    country
+                )
+                if (country?.favorite!!) favoriteBtn.setBackgroundResource(R.drawable.ic_star_black_24dp)
+                else favoriteBtn.setBackgroundResource(R.drawable.ic_star_border_black_16dp)
 
-                var myDataList =
-                    items?.get(position)?.let { it1 ->
-                        DataHolder.dbReference.CountryDao().delete(
-                            it1
-                        )
-                    }
-/*
-                var myDataNewList =  DataManager.dbReference.interventionDao().getAll()
-                DataManager.interventionsList.clear()
-                println("deleted ====>"+ myDataNewList.size)
-                DataManager.interventionsList.addAll(myDataNewList)
-*/
+
             }.invokeOnCompletion {
 
                 var activity = (context as MainActivity)
@@ -75,8 +74,11 @@ class CountryListAdapter(
         }
 
 
+
+
+
         // Set a click listener for button widget
-        editBtn.setOnClickListener {
+        favoriteBtn.setOnClickListener {
 
             /*
         }

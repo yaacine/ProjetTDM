@@ -10,15 +10,13 @@ interface CountryDAO {
 
     @Query("SELECT * FROM country")
     fun getAll(): List<Country>
-/*
-    @Query ("SELECT countryId, name , code, visited, favorite FROM country")
-    fun getAllAbstracts(): List<Country>
 
+    @Query("SELECT * FROM country WHERE favorite = 1")
+    fun getAllFavorites(): List<Country>
 
+    @Query("SELECT * FROM country WHERE visited = 1")
+    fun getAllVisited(): List<Country>
 
-    @Query ("SELECT countryId, name , code, visited, favorite FROM country")
-    fun getFavoriteAbstracts(): List<Country>
-*/
 
     @Query("SELECT * FROM country WHERE code LIKE :code")
     fun findBycode(code: String): Country
@@ -32,6 +30,7 @@ interface CountryDAO {
 
     @Delete
     fun delete(country: Country)
+
 
     @Update
     fun updateCountry(vararg country: Country)

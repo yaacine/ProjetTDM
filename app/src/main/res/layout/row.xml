@@ -46,28 +46,15 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/editBtn"
+                android:id="@+id/favoriteBtn"
                 android:layout_width="39dp"
                 android:layout_height="51dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="16dp"
                 android:layout_weight="1"
-                android:text="E"
-                app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/deleteBtn" />
-
-            <Button
-                android:id="@+id/deleteBtn"
-                android:layout_width="37dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="3dp"
-                android:layout_toRightOf="@id/editBtn"
-                android:layout_weight="1"
-                android:text="D"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/editBtn"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
