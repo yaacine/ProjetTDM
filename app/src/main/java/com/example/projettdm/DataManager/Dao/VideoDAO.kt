@@ -3,6 +3,7 @@ package com.example.projettdm.DataManager.Dao
 import androidx.room.*
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Video
+import com.example.projettdm.DataManager.Entities.VideoYoutube
 
 @Dao
 interface VideoDAO {
@@ -10,7 +11,7 @@ interface VideoDAO {
     fun getAll(): List<Video>
 
     @Query("SELECT * FROM video WHERE idCountry LIKE :id")
-    fun findBycountry(id: String):  List<Video>
+    fun findBycountry(id: Int):  List<Video>
 
 
     @Insert
@@ -21,4 +22,10 @@ interface VideoDAO {
 
     @Update
     fun updateCountry(vararg video: Video)
+
+    @Insert
+    fun insertAllYoutube(vararg video : VideoYoutube)
+
+    @Query("select url from video_youtube where idCountry=:id")
+    fun get_youtube_id(id:Int):List<String>
 }
