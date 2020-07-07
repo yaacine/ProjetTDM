@@ -53,5 +53,6 @@ dependencies {
 
 
     implementation 'io.github.ivanespitiac:imageslider:1.0.3'
+    implementation files(' /Users/mac/Dev/Projet\\ mobile/app/libs/twitter4j-4.0.7.zip ')
 
 }

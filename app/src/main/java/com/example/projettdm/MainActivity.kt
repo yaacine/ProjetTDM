@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
 
         button.setOnClickListener {
-            val intent = Intent(this, CountryDetails::class.java)
+            val intent = Intent(this, CountryDetails(1)::class.java)
             startActivity(intent)
         }
         toolbar = findViewById(R.id.toolbar)
@@ -162,40 +162,6 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         return true
     }
 
-        /*
-          GlobalScope.launch {
-            db.CountryDao().insertAll(Country(name = "Algeria", code = "DZ" ,
-                description = "flutter run " , history = "algeira", visited = false , favorite = false ,
-                flagSrc = "" , hymeSrc = "" ))
-
-            db.CountryDao().insertAll(Country(name = "ksa", code = "DZ" ,
-                description = "flutter run " , history = "algeira", visited = false , favorite = false ,
-                flagSrc = "" , hymeSrc = "" ))
-
-            println("====> data added successfully")
-
-            var data = db.CountryDao().getAll()
-            println("====> data retrieved successfully")
-            data?.forEach {
-                println(it)
-            }
-        }
-        */
-
-
-      //  val iconName = (R.drawable.ic_launcher_background)
-        //println("icon name ===>"+ iconName)
-
-
-        /*button.setOnClickListener {
-
-            val intent = Intent(this, CountryDetails::class.java)
-            startActivity(intent)
-        }*/
-
-
-
-
 
     fun populateDatabase(myDB: AppDatabase){
 
@@ -247,7 +213,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                             "Carthaginian-held territory before the first First Punic War\n" +
                             "The Numidians and Moors belonged to the race from which the Berbers are descended. The translated meaning of Numidian is Nomad and indeed the people were" +
                             " semi-nomadic until the reign of Masinissa of the Massyli tribe",
-                    visited = false ,
+                    visited = true ,
                     favorite = false ,
                     population = 20000000,
                     surface = 2150 ,

@@ -1,12 +1,11 @@
 package com.example.projettdm
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +39,32 @@ class TweetsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        /*
+        val cb = ConfigurationBuilder()
+        cb.setDebugEnabled(true)
+            .setOAuthConsumerKey("yourConsumeKey")
+            .setOAuthConsumerSecret("yourConsumerSecret")
+            .setOAuthAccessToken("yourAccessToken")
+            .setOAuthAccessTokenSecret("yourTokenSecret")
+        val tf = TwitterFactory(cb.build())
+        val twitter: Twitter = tf.getInstance()
+        try {
+            val query = Query("query")
+            val result: QueryResult
+            result = twitter.search(query)
+            val tweets: List<Status> = result.getTweets()
+            for (tweet in tweets) {
+                System.out.println(
+                    "@" + tweet.getUser().getScreenName().toString() + " - " + tweet.getText()
+                )
+            }
+            System.exit(0)
+        } catch (te: TwitterException) {
+            te.printStackTrace()
+            System.out.println("Failed to search tweets: " + te.getMessage())
+            System.exit(-1)
+        }*/
         return inflater.inflate(R.layout.fragment_tweets, container, false)
     }
 

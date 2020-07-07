@@ -8,7 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_country_details.*
 
 
-class CountryDetails : AppCompatActivity() {
+class CountryDetails(countryId: Int) : AppCompatActivity() {
     var navigationView: BottomNavigationView? = null
     var country_id = 3
 
