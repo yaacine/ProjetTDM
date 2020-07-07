@@ -16,11 +16,8 @@ import kotlinx.android.synthetic.main.youtube_item.view.*
 
 
 class YoutubeAdapter(ls: MutableList<String>, cntx:Context) : RecyclerView.Adapter<YoutubeAdapter.MYViewHolder>() {
-    var liste: MutableList<String> = listOf<String>("XfP31eWXli4","XfP31eWXli4") as MutableList<String>
+    var liste: MutableList<String> = ls
     var con : Context = cntx
-
-
-    private var key = "AIzaSyAILXPCxjNLGaJAxtF4GTLWba321t3vnRU"
 
 
 

@@ -54,7 +54,6 @@ class VideosFragment : Fragment() {
     private var list_Video : MutableList<Video> = mutableListOf()
     private var youtube_list : MutableList<String> = mutableListOf()
 
-    private var youTubePlayer: YouTubePlayer? = null
 
     private var databse: AppDatabase? = null
     private var country_dao : CountryDAO? = null
@@ -106,6 +105,7 @@ class VideosFragment : Fragment() {
                     active.video_dao?.findBycountry(active.country_id)?.forEach { i->
                         active.list_Video.add(i)
                     }
+                    active.youtube_list  = active.video_dao?.get_youtube_id(active.country_id) as MutableList<String>
 
                 }
                 else{
@@ -142,7 +142,7 @@ class VideosFragment : Fragment() {
         val recycler2 = rootView.findViewById<View>(R.id.recycler_view_youtube) as RecyclerView
         val lay_manager2 = LinearLayoutManager(activity)
         recycler2.layoutManager = lay_manager2
-        val mAdapter2 = YoutubeAdapter(listOf<String>("h") as MutableList<String>,context!!)
+        val mAdapter2 = YoutubeAdapter(this.youtube_list,context!!)
         recycler2.adapter = mAdapter2
         lay_manager2.stackFromEnd = true
         recycler2.itemAnimator = DefaultItemAnimator()

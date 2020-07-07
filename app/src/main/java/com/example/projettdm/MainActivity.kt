@@ -14,6 +14,7 @@ import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Image
 import com.example.projettdm.DataManager.Entities.Video
+import com.example.projettdm.DataManager.Entities.VideoYoutube
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.GlobalScope
@@ -199,9 +200,46 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                 hymeSrc = (R.raw.hyme_saudi)
             )
 
+            var fr = Country(
+                countryId = 4,
+                name = "France",
+                code = "FR" ,
+                description = " la République française (Écouter), est un État souverain transcontinental dont le territoire métropolitain est situé en Europe de l'Ouest. Ce dernier a des frontières terrestres avec la Belgique, le Luxembourg, l'Allemagne, la Suisse, l'Italie, l'Espagne et les deux principautés d'Andorre et de Monaco. La France dispose aussi d'importantes façades maritimes sur l'Atlantique et la Méditerranée. Son territoire ultramarin s'étend dans les océans Indien, Atlantique et Pacifique ainsi qu'en Amérique du Sud, et a des frontières terrestres avec le Brésil, le Suriname et les Pays-Bas.\n" +
+                        "\n" +
+                        "Fruit d'une histoire politique longue et mouvementée, la France est une république constitutionnelle unitaire ayant un régime semi-présidentiel. La devise de la République est depuis 1875 « Liberté, Égalité, Fraternité » et son drapeau est constitué des trois couleurs nationales : bleu, blanc, rouge. Son hymne national est La Marseillaise,",
+
+                history = "La France métropolitaine actuelle occupe la plus grande partie de l'ancienne Gaule celtique, conquise par Jules César au ier siècle av. J.-C., mais elle tire son nom des Francs, un peuple germanique qui s'y installa à partir du ve siècle. La France est un État dont l'unification est ancienne, " +
+                        "et fut l'un des premiers pays de l'époque moderne à tenter une expérience démocratique.",
+                visited = false ,
+                favorite = false ,
+                population = 20000000,
+                surface = 2150 ,
+                flagSrc = (R.drawable.frag_fr),
+                hymeSrc = (R.raw.france)
+            )
+
+            var russia = Country(
+                countryId = 5,
+                name = "RUSSIA",
+                code = "RU" ,
+                description = " est un État fédéral transcontinental fondé en 1991, à la suite de la dislocation de l'Union des républiques socialistes soviétiques et reconnu comme successeur légal de celle-ci. Sa capitale est Moscou, sa langue officielle le russe et sa monnaie le rouble.\n" +
+                        "\n" +
+                        "Plus vaste État de la planète, la Russie est à cheval sur l'Asie du Nord (74,7 % de sa superficie) et sur l'Europe (25,3 %). Le territoire s'étend ainsi d'ouest en est, de l'enclave de Kaliningrad au district autonome de Tchoukotka, sur plus de 9 000 kilomètres et pour une superficie de 17 125 191 km2. Bien qu'entourée de nombreuses mers et de deux océans, la Russie est caractérisée par un climat continental avec des milieux particulièrement froids et hostiles sur la majeure partie du territoire.\n" +
+                        "\n" +
+                        "La population russe est estimée à près de 147 millions d'habitants en 20191, ce qui en fait le neuvième pays le plus peuplé de la planète. 78 % de ses habitants vivent en Europe5.",
+
+                history = "Après la Seconde Guerre mondiale, qui avait entraîné la mort d'environ 27 millions de personnes30 (civils et militaires), la population avait retrouvé son niveau d'avant-guerre en 1955 (111 millions), puis s'était accrue de près de 35 % en atteignant son maximum en 1992 (148,7 millions). Cependant plusieurs phénomènes sont venus modifier cette dynamique démographique dont la plus importante est sans doute la « normalisation » de la fécondité russe qui a effectué à compter de 1988 sa transition démographique et présente désormais un taux de natalité proche de celui des autres pays d'Europe de l'Est, c'est-à-dire très bas.",
+                visited = false ,
+                favorite = false ,
+                population = 20000000,
+                surface = 2150 ,
+                flagSrc = (R.drawable.russian_frag),
+                hymeSrc = (R.raw.russia)
+            )
+
 
             // inserting countries
-            myDB.CountryDao().insertAll(algeria , tunisia, saudia)
+            myDB.CountryDao().insertAll(algeria , tunisia, saudia , fr , russia)
 
             // defining images for countries
             // algeria
@@ -240,6 +278,18 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             // inserting images
             myDB.ImageDao().insertAll(sa_img1,sa_img2,sa_img3,sa_img4, sa_img5 ,sa_img6,sa_img7)
 
+            myDB.ImageDao().insertAll(
+                Image("img1","desc",R.drawable.fr_1,"yacine",4),
+                Image("img1","desc",R.drawable.fr_2,"yacine",4),
+                Image("img1","desc",R.drawable.fr_3,"yacine",4)
+            )
+
+            myDB.ImageDao().insertAll(
+                Image("img1","desc",R.drawable.russia_3,"yacine",5),
+                Image("img1","desc",R.drawable.russia_1,"yacine",5),
+                Image("img1","desc",R.drawable.russia_2,"yacine",5)
+            )
+
 
             println("====> data added successfully")
 
@@ -252,6 +302,30 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
             val vid1 = Video(" video 1","decription",R.raw.algerie2,"me",1)
             val vid2 = Video(" video ","decription",R.raw.algerie2,"me",1)
+
+            val yt = VideoYoutube("6gjz41kdDwI",1)
+            val yt2 = VideoYoutube("N6t7_RAuR4g",1)
+            val yt3 = VideoYoutube("-sgy5hxHzSw",1)
+
+            // russia : "YrNxPr4PKQo" "S_dfq9rFWAE"
+            // fr "I60A8-iORm8"   "c2BEGup4eBE"
+            // saudi "ollH45NDXu0" "bUzcCBHUDbM"
+
+            myDB.VideoDao().insertAllYoutube(
+                VideoYoutube("S_dfq9rFWAE",5),
+                VideoYoutube("YrNxPr4PKQo",5),
+                VideoYoutube("I60A8-iORm8",4),
+                VideoYoutube("c2BEGup4eBE",4),
+                VideoYoutube("ollH45NDXu0",3),
+                VideoYoutube("bUzcCBHUDbM",3),
+                VideoYoutube("G_WoDMAMji8",2)
+
+
+
+            )
+
+
+            myDB.VideoDao().insertAllYoutube(yt,yt2,yt3)
 
             myDB.VideoDao().insertAll(vid1,vid2)
         }
