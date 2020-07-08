@@ -12,9 +12,11 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.projettdm.DataManager.Entities.Country
+import com.example.projettdm.DataManager.Entities.Tweet
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import twitter4j.*
+import twitter4j.Status
 
 import twitter4j.conf.ConfigurationBuilder
 
@@ -37,6 +39,7 @@ class TweetsFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     lateinit var tweetsAdapter: TweetsListAdapter
+    private var tweet_list :MutableList<Status> = mutableListOf()
     private var country_id:Int = 0
     private var country: Country? = null
     private var countryName: String? = ""
@@ -64,7 +67,8 @@ class TweetsFragment : Fragment() {
         // Inflate the layout for this fragment
         root =inflater.inflate(R.layout.fragment_tweets, container, false)
         Toast.makeText(activity, "Error loading the data", Toast.LENGTH_SHORT).show()
-        tweetsAdapter = TweetsListAdapter( activity!!, R.layout.row_tweet, DataHolder.tweetsList)
+
+        tweetsAdapter = TweetsListAdapter( activity!!, R.layout.row_tweet, tweet_list)
 
         var listV : ListView = root!!.findViewById(R.id.tweetsList)
         listV.adapter = tweetsAdapter
@@ -78,7 +82,7 @@ class TweetsFragment : Fragment() {
 
                 if(active.country_id>0){
 
-                    active.country = DataHolder.dbReference.CountryDao()?.findById(active.country_id)
+                    active.country = DataHolder.dbReference.CountryDao().findById(active.country_id)
 
                 }
                 return null
@@ -95,7 +99,7 @@ class TweetsFragment : Fragment() {
                 val tf = TwitterFactory(cb.build())
                 val twitter: Twitter = tf.getInstance()
                 try {
-                    val query = Query(active.country?.name+"News")
+                    val query = Query(active.country?.name+" News")
                     lateinit var result: QueryResult
                     GlobalScope.launch {
                         Log.d("getting tweets","tweets ")
@@ -103,8 +107,10 @@ class TweetsFragment : Fragment() {
                     }.invokeOnCompletion {
 
                         val tweets: List<twitter4j.Status> = result.getTweets()
+                        active.tweet_list.clear()
                         for (tweet in tweets) {
                             DataHolder.tweetsList.add(tweet)
+                            active.tweet_list.add(tweet)
                             println(
                                 "@" + tweet.getUser().getScreenName().toString() + " - " + tweet.getText() +"==>"
                             )

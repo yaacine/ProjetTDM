@@ -17,7 +17,7 @@ import twitter4j.Status
 
 class TweetsListAdapter(
     var mCtx: Context, var resource: Int,
-    var items: List<Status>?
+    var items: MutableList<Status>
 ) : ArrayAdapter<Status>(mCtx, resource, items as MutableList<Status>) {
 
 
@@ -32,11 +32,11 @@ class TweetsListAdapter(
 
         var openTwitterBtn: TextView = view.findViewById(R.id.buttonTwitter)
 
-        var status: Status? = items?.get(position)
+        var status: Status? = items[position]
 
 
         val uri = R.drawable.ic_iconfinder_icon_white
-        val myres: Drawable = mCtx.getResources().getDrawable(uri!!)
+        val myres: Drawable = mCtx.resources.getDrawable(uri)
         imageView.setColorFilter(R.color.colorPrimary)
         imageView.setImageDrawable(myres)
 
