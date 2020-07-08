@@ -1,13 +1,17 @@
 package com.example.projettdm
 
+import android.annotation.SuppressLint
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.projettdm.DataManager.Entities.Country
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import twitter4j.*
@@ -33,6 +37,10 @@ class TweetsFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     lateinit var tweetsAdapter: TweetsListAdapter
+    private var country_id:Int = 0
+    private var country: Country? = null
+    private var countryName: String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -47,59 +55,86 @@ class TweetsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        arguments!!.getInt("country_id").let {it->
+            Log.d(" Country_id_fount",it.toString())
+            this.country_id = it
+
+        }
         // Inflate the layout for this fragment
         root =inflater.inflate(R.layout.fragment_tweets, container, false)
         Toast.makeText(activity, "Error loading the data", Toast.LENGTH_SHORT).show()
         tweetsAdapter = TweetsListAdapter( activity!!, R.layout.row_tweet, DataHolder.tweetsList)
 
-
-        // TODO: fix this  java.lang.IllegalStateException: root!!.findViewById(R.id.listView) must not be null
         var listV : ListView = root!!.findViewById(R.id.tweetsList)
         listV.adapter = tweetsAdapter
+        val active = this ;
+        val luncher = @SuppressLint("StaticFieldLeak")
+        object : AsyncTask<Void, Void, Void>() {
 
-        val cb = ConfigurationBuilder()
-             cb.setDebugEnabled(true)
-            .setOAuthConsumerKey("BiTL2ru2EuVMElv7WNU4EJEuf")
-            .setOAuthConsumerSecret("N4muFKXI0gYJYOvAaLFAClQyf4MX8W7979zNCuAXf3AI2WqbQV")
-            .setOAuthAccessToken("1059903815921623041-o61IrmoeCRyhobGB9I8DA0RrmaU7ED")
-            .setOAuthAccessTokenSecret("4UagcnwlsZkEzfyxfGF0MURtyu8x5OEA87ZVRnI7IJ7Ff")
-        val tf = TwitterFactory(cb.build())
-        val twitter: Twitter = tf.getInstance()
-        try {
-            val query = Query("Algeria News")
-           lateinit var result: QueryResult
-            GlobalScope.launch {
-                result = twitter.search(query)
-            }.invokeOnCompletion {
+            override fun doInBackground(vararg params: Void?): Void? {
+                //in background
+                //active
 
-                val tweets: List<Status> = result.getTweets()
-                for (tweet in tweets) {
-                    DataHolder.tweetsList.add(tweet)
-                    println(
-                        "@" + tweet.getUser().getScreenName().toString() + " - " + tweet.getText() +"==>"
-                    )
+                if(active.country_id>0){
+
+                    active.country = DataHolder.dbReference.CountryDao()?.findById(active.country_id)
+
                 }
+                return null
+            }
+
+            override fun onPostExecute(result: Void?) {
+                println("got country ====>"+active.country?.name)
+                val cb = ConfigurationBuilder()
+                cb.setDebugEnabled(true)
+                    .setOAuthConsumerKey("BiTL2ru2EuVMElv7WNU4EJEuf")
+                    .setOAuthConsumerSecret("N4muFKXI0gYJYOvAaLFAClQyf4MX8W7979zNCuAXf3AI2WqbQV")
+                    .setOAuthAccessToken("1059903815921623041-o61IrmoeCRyhobGB9I8DA0RrmaU7ED")
+                    .setOAuthAccessTokenSecret("4UagcnwlsZkEzfyxfGF0MURtyu8x5OEA87ZVRnI7IJ7Ff")
+                val tf = TwitterFactory(cb.build())
+                val twitter: Twitter = tf.getInstance()
+                try {
+                    val query = Query(active.country?.name+"News")
+                    lateinit var result: QueryResult
+                    GlobalScope.launch {
+                        Log.d("getting tweets","tweets ")
+                        result = twitter.search(query)
+                    }.invokeOnCompletion {
+
+                        val tweets: List<twitter4j.Status> = result.getTweets()
+                        for (tweet in tweets) {
+                            DataHolder.tweetsList.add(tweet)
+                            println(
+                                "@" + tweet.getUser().getScreenName().toString() + " - " + tweet.getText() +"==>"
+                            )
+                        }
 
 
-               // adapter.notifyDataSetChanged()
+                        // adapter.notifyDataSetChanged()
 
-                activity!!.runOnUiThread(java.lang.Runnable {
+                        activity!!.runOnUiThread(java.lang.Runnable {
+
+                            active.tweetsAdapter.notifyDataSetChanged()
+                            // adapter.notifyDataSetChanged()
+
+                        })
+
+                    }
 
 
-                    this.tweetsAdapter.notifyDataSetChanged()
-                   // adapter.notifyDataSetChanged()
-
-
-                })
+                } catch (te: TwitterException) {
+                    te.printStackTrace()
+                    System.out.println("Failed to search tweets: " + te.errorMessage)
+                    System.exit(-1)
+                }
 
             }
 
-
-        } catch (te: TwitterException) {
-            te.printStackTrace()
-            System.out.println("Failed to search tweets: " + te.errorMessage)
-            System.exit(-1)
         }
+        luncher.execute()
+
+
         return root
     }
 

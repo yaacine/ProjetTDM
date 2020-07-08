@@ -52,13 +52,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
         }
 
-
-
-        button.setOnClickListener {
-            val intent = Intent(this, CountryDetails::class.java)
-            intent.putExtra("countryId","3")
-            startActivity(intent)
-        }
+        
         toolbar = findViewById(R.id.toolbar)
 
 
