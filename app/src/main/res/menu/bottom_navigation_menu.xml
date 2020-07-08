@@ -5,11 +5,11 @@
         android:icon="@drawable/ic_info_outline_black_24dp"
         android:title= "@string/information" />
     <item
-        android:id="@+id/navigation_sms"
+        android:id="@+id/navigation_twitter"
         android:icon="@drawable/ic_iconfinder_icon_white"
         android:title="@string/tweets" />
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_videos"
         android:icon="@drawable/ic_ondemand_video_black_24dp"
         android:title="@string/videos" />
 </menu>

@@ -27,19 +27,19 @@ class CountryDetails : AppCompatActivity() {
 
         bottom_navigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.navigation_sms-> {
+                R.id.navigation_home-> {
                     title=resources.getString(R.string.information)
                     loadFragment(InformationFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
 
-                R.id.navigation_home-> {
+                R.id.navigation_twitter-> {
                     title=resources.getString(R.string.tweets)
                     loadFragment(TweetsFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
 
-                R.id.navigation_notifications-> {
+                R.id.navigation_videos-> {
                     title=resources.getString(R.string.videos)
                     loadFragment(VideosFragment())
                     return@setOnNavigationItemSelectedListener true

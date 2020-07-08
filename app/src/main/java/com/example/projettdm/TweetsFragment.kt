@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import twitter4j.*
 
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,7 +32,7 @@ class TweetsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-
+    lateinit var tweetsAdapter: TweetsListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,39 +41,66 @@ class TweetsFragment : Fragment() {
         }
     }
 
+    var root: View? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
+        root =inflater.inflate(R.layout.fragment_tweets, container, false)
         Toast.makeText(activity, "Error loading the data", Toast.LENGTH_SHORT).show()
+        tweetsAdapter = TweetsListAdapter( activity!!, R.layout.row_tweet, DataHolder.tweetsList)
+
+
+        // TODO: fix this  java.lang.IllegalStateException: root!!.findViewById(R.id.listView) must not be null
+        var listV : ListView = root!!.findViewById(R.id.tweetsList)
+        listV.adapter = tweetsAdapter
 
         val cb = ConfigurationBuilder()
              cb.setDebugEnabled(true)
-            .setOAuthConsumerKey("RvXutluA3C8wwS3LpEJZ16rS3")
-            .setOAuthConsumerSecret("NZcPWA3nXq2mFGOQg8CqG4mP3KLYTgMSx2eeNBK9AYa7TUUTVL")
-            .setOAuthAccessToken("1223554396883124224-kpX9Av4WidSXK2aaHHZXAJBfm8bXLn")
-            .setOAuthAccessTokenSecret("iciEbhP6DH6BKJnPg71VP6uMAD5iifNM2Ka0fGsRlQ4Jt")
+            .setOAuthConsumerKey("BiTL2ru2EuVMElv7WNU4EJEuf")
+            .setOAuthConsumerSecret("N4muFKXI0gYJYOvAaLFAClQyf4MX8W7979zNCuAXf3AI2WqbQV")
+            .setOAuthAccessToken("1059903815921623041-o61IrmoeCRyhobGB9I8DA0RrmaU7ED")
+            .setOAuthAccessTokenSecret("4UagcnwlsZkEzfyxfGF0MURtyu8x5OEA87ZVRnI7IJ7Ff")
         val tf = TwitterFactory(cb.build())
         val twitter: Twitter = tf.getInstance()
         try {
-            val query = Query("Algeria")
-            val result: QueryResult
-            result = twitter.search(query)
-            val tweets: List<Status> = result.getTweets()
-            for (tweet in tweets) {
-                println(
-                    "@" + tweet.getUser().getScreenName().toString() + " - " + tweet.getText() +"==>"
-                )
+            val query = Query("Algeria News")
+           lateinit var result: QueryResult
+            GlobalScope.launch {
+                result = twitter.search(query)
+            }.invokeOnCompletion {
+
+                val tweets: List<Status> = result.getTweets()
+                for (tweet in tweets) {
+                    DataHolder.tweetsList.add(tweet)
+                    println(
+                        "@" + tweet.getUser().getScreenName().toString() + " - " + tweet.getText() +"==>"
+                    )
+                }
+
+
+               // adapter.notifyDataSetChanged()
+
+                activity!!.runOnUiThread(java.lang.Runnable {
+
+
+                    this.tweetsAdapter.notifyDataSetChanged()
+                   // adapter.notifyDataSetChanged()
+
+
+                })
+
             }
-            System.exit(0)
+
+
         } catch (te: TwitterException) {
             te.printStackTrace()
             System.out.println("Failed to search tweets: " + te.errorMessage)
             System.exit(-1)
         }
-        return inflater.inflate(R.layout.fragment_tweets, container, false)
+        return root
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -80,16 +108,7 @@ class TweetsFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
-    /*
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-    */
+
 
 
     override fun onDetach() {
