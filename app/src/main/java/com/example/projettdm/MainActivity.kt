@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     lateinit var navView: NavigationView
     lateinit var adapter: CountryListAdapter
 
+    private var list_countries : MutableList<Country> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,13 +35,15 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         DataHolder.dbReference = db
         populateDatabase(db)
 
-        adapter = CountryListAdapter(this, R.layout.row, DataHolder.countriesList)
+        adapter = CountryListAdapter(this, R.layout.row, this.list_countries)
         listView.adapter = adapter
 
         try {
             GlobalScope.launch {
                 var myDataList = db.CountryDao().getAll()
                 DataHolder.countriesList.addAll(myDataList)
+                list_countries.clear()
+                list_countries.addAll(myDataList)
                 println("we got our data ===>"+ DataHolder.countriesList.size)
             }.invokeOnCompletion {
 
@@ -78,6 +82,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         var myDataList = DataHolder.dbReference.CountryDao().getAll()
                         DataHolder.countriesList.clear()
                         DataHolder.countriesList.addAll(myDataList)
+                        list_countries.clear()
+                        list_countries.addAll(myDataList)
                         println("we got our data ===>"+ DataHolder.countriesList.size)
                     }.invokeOnCompletion {
 
@@ -101,6 +107,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         var myDataList = DataHolder.dbReference.CountryDao().getAllFavorites()
                         DataHolder.countriesList.clear()
                         DataHolder.countriesList.addAll(myDataList)
+                        list_countries.clear()
+                        list_countries.addAll(myDataList)
                         println("we got our data ===>"+ DataHolder.countriesList.size)
                     }.invokeOnCompletion {
 
@@ -127,6 +135,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         var myDataList = DataHolder.dbReference.CountryDao().getAllVisited()
                         DataHolder.countriesList.clear()
                         DataHolder.countriesList.addAll(myDataList)
+                        list_countries.clear()
+                        list_countries.addAll(myDataList)
                         println("we got our data ===>"+ DataHolder.countriesList.size)
                     }.invokeOnCompletion {
 
