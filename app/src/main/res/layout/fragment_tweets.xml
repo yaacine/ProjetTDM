@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".TweetsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/btn_back"
+            android:layout_margin="0dp"
+            android:background="@drawable/ic_keyboard_backspace_24px"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:paddingTop="4dp"
+            android:layout_height="60dp"
+            android:text="Pays"
+            android:textSize="36dp"
+            android:textColor="#ffff"
+            android:id="@+id/txt_nom"
+            android:textAlignment="center"
+            android:background="@color/colorPrimary"
+            android:fontFamily="sans-serif-medium"/>
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,4 +44,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

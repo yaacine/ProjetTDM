@@ -13,6 +13,7 @@ import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Image
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -33,10 +34,12 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         val db = AppDatabase(this)
         DataHolder.dbReference = db
-        populateDatabase(db)
+        //populateDatabase(db)
 
         adapter = CountryListAdapter(this, R.layout.row, this.list_countries)
         listView.adapter = adapter
+
+        nav_view.menu.getItem(0).isChecked = true;
 
         try {
             GlobalScope.launch {
@@ -46,8 +49,9 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                 list_countries.addAll(myDataList)
                 println("we got our data ===>"+ DataHolder.countriesList.size)
             }.invokeOnCompletion {
+                adapter.notifyDataSetChanged()
 
-                this.runOnUiThread(Runnable { adapter.notifyDataSetChanged() })
+              //  this.runOnUiThread(Runnable { adapter.notifyDataSetChanged() })
                     // adapter.notifyDataSetChanged()
             }
 
@@ -73,6 +77,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_all -> {
@@ -84,7 +89,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         DataHolder.countriesList.addAll(myDataList)
                         list_countries.clear()
                         list_countries.addAll(myDataList)
-                        println("we got our data ===>"+ DataHolder.countriesList.size)
+                        println("_________________we got our data ===>")
                     }.invokeOnCompletion {
 
                         this.runOnUiThread(Runnable {
@@ -109,7 +114,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         DataHolder.countriesList.addAll(myDataList)
                         list_countries.clear()
                         list_countries.addAll(myDataList)
-                        println("we got our data ===>"+ DataHolder.countriesList.size)
+                        println("_________________we got our data ===>")
                     }.invokeOnCompletion {
 
                         this.runOnUiThread(Runnable {
@@ -137,7 +142,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         DataHolder.countriesList.addAll(myDataList)
                         list_countries.clear()
                         list_countries.addAll(myDataList)
-                        println("we got our data ===>"+ DataHolder.countriesList.size)
+                        println("_________________we got our data ===>")
                     }.invokeOnCompletion {
 
                         this.runOnUiThread(Runnable {
@@ -161,6 +166,32 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_about -> {
                 Toast.makeText(this, "Comming soon!", Toast.LENGTH_SHORT).show()
+            }
+            else -> { // Note the block
+                try {
+                    GlobalScope.launch {
+                        var myDataList = DataHolder.dbReference.CountryDao().getAll()
+                        DataHolder.countriesList.clear()
+                        DataHolder.countriesList.addAll(myDataList)
+                        list_countries.clear()
+                        list_countries.addAll(myDataList)
+                        println("_________________we got our data ===>")
+                    }.invokeOnCompletion {
+
+                        this.runOnUiThread(Runnable {
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(this, "All Countries", Toast.LENGTH_SHORT).show()
+
+                        })
+
+
+                    }
+
+                }catch (err:Error){
+                    println("Error loading the data")
+                    Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

@@ -2,6 +2,7 @@ package com.example.projettdm
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.AsyncTask
@@ -17,6 +18,9 @@ import com.example.projettdm.DataManager.Dao.CountryDAO
 import com.example.projettdm.DataManager.Dao.ImageDAO
 import com.example.projettdm.DataManager.Entities.Country
 import kotlinx.android.synthetic.main.fragment_information.*
+import kotlinx.android.synthetic.main.fragment_information.btn_back
+import kotlinx.android.synthetic.main.fragment_information.txt_nom
+import kotlinx.android.synthetic.main.fragment_tweets.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -144,6 +148,11 @@ class InformationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        btn_back.setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("countryId",country?.countryId.toString())
+            context?.startActivity(intent)
+        }
 
         btn_play.setOnClickListener{
 
@@ -174,17 +183,7 @@ class InformationFragment : Fragment() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
-       /* val uri = uri_from_ressource(R.drawable.dz_2)
-        val uri1 = uri_from_ressource(R.drawable.dz_3)
-
-        var ls = arrayOf(uri.toString(),uri1.toString())
-        slider.setItems(ls.toList())
-        slider.getIndicator() */
-
-    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -251,6 +250,7 @@ class InformationFragment : Fragment() {
             .build()
         return uri1
     }
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.example.projettdm
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Tweet
+import kotlinx.android.synthetic.main.fragment_tweets.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import twitter4j.*
@@ -66,7 +68,7 @@ class TweetsFragment : Fragment() {
         }
         // Inflate the layout for this fragment
         root =inflater.inflate(R.layout.fragment_tweets, container, false)
-        Toast.makeText(activity, "Error loading the data", Toast.LENGTH_SHORT).show()
+       // Toast.makeText(activity, "Error loading the data", Toast.LENGTH_SHORT).show()
 
         tweetsAdapter = TweetsListAdapter( activity!!, R.layout.row_tweet, tweet_list)
 
@@ -90,6 +92,9 @@ class TweetsFragment : Fragment() {
 
             override fun onPostExecute(result: Void?) {
                 println("got country ====>"+active.country?.name)
+
+                active.txt_nom.text= active.country?.name
+
                 val cb = ConfigurationBuilder()
                 cb.setDebugEnabled(true)
                     .setOAuthConsumerKey("BiTL2ru2EuVMElv7WNU4EJEuf")
@@ -191,5 +196,15 @@ class TweetsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btn_back.setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("countryId",country?.countryId.toString())
+            context?.startActivity(intent)
+        }
     }
 }
