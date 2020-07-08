@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/generalnotitle">
         <activity android:name=".CountryDetails"></activity>
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

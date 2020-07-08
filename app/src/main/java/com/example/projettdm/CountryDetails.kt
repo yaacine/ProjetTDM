@@ -3,6 +3,7 @@ package com.example.projettdm
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,6 +19,7 @@ class CountryDetails : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_country_details)
         navigationView =findViewById(R.id.bottom_navigation);
 
@@ -62,6 +64,7 @@ class CountryDetails : AppCompatActivity() {
 
         val transaction = supportFragmentManager.beginTransaction()
         fragment.arguments = bundle // arguments passed
+        fragment.retainInstance = true
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()

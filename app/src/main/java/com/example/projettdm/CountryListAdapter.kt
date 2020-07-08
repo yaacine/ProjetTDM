@@ -38,6 +38,9 @@ class CountryListAdapter(
         var clickableSection: LinearLayout = view.findViewById(R.id.linearToClick)
 
         clickableSection.setOnClickListener {
+
+
+
             val intent = Intent(mCtx, CountryDetails::class.java)
             intent.putExtra("countryId",country?.countryId.toString())
             mCtx.startActivity(intent)

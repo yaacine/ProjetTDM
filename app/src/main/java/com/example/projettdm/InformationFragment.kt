@@ -12,15 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Dao.CountryDAO
 import com.example.projettdm.DataManager.Dao.ImageDAO
 import com.example.projettdm.DataManager.Entities.Country
 import kotlinx.android.synthetic.main.fragment_information.*
-import kotlinx.android.synthetic.main.fragment_information.btn_back
-import kotlinx.android.synthetic.main.fragment_information.txt_nom
-import kotlinx.android.synthetic.main.fragment_tweets.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -144,6 +140,13 @@ class InformationFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_information, container, false)
 
     }
+
+     /*override fun onSaveInstanceState(outState: Bundle) {
+        // Make sure to call the super method so that the states of our views are saved
+        super.onSaveInstanceState(outState)
+        // Save our own state now
+        outState.putSerializable("courtry", this.ImagesList)
+    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
