@@ -14,7 +14,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:id="@+id/btn_back"
+            android:id="@+id/btn_back_vid"
             android:layout_margin="0dp"
             android:background="@drawable/ic_keyboard_backspace_24px"
             android:layout_height="match_parent"/>
@@ -26,22 +26,13 @@
             android:text="Pays"
             android:textSize="36dp"
             android:textColor="#ffff"
-            android:id="@+id/txt_nom"
+            android:id="@+id/txt_nom_vid"
             android:textAlignment="center"
             android:background="@color/colorPrimary"
             android:fontFamily="sans-serif-medium"/>
 
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Pays"
-        android:textSize="40dp"
-        android:textColor="#ffff"
-        android:id="@+id/txt_nom_vid"
-        android:textAlignment="center"
-        android:background="@color/colorPrimary"
-        android:fontFamily="sans-serif-medium"/>
+
     <TextView
         android:layout_width="match_parent"
         android:padding="10dp"

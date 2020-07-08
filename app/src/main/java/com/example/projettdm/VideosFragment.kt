@@ -158,6 +158,11 @@ class VideosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        btn_back_vid
+            .setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            context?.startActivity(intent)
+        }
         linear_holder.scrollTo(0,0)
         linear_holder.scrollY = 0
     }
@@ -226,12 +231,5 @@ class VideosFragment : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        btn_back.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java)
-            context?.startActivity(intent)
-        }
-    }
 
 }
