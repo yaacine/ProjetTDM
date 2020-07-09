@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_country_details.*
 class CountryDetails : AppCompatActivity() {
     var navigationView: BottomNavigationView? = null
 
-    var country_id :Int = 1
+    var country_id :Int = 4
 
 
 

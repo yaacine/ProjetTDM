@@ -68,9 +68,12 @@ class ReceiverStart : BroadcastReceiver() {
 
                 var ls = listOf<Country>()
                  ls = active.country_dao?.getNewCountry()!!
+
+                Log.d("intent______ listing", ls.toString())
+
                 if(ls.isNotEmpty()){
                     active.country = ls[0]
-                    print(active.country!!.name)
+                    Log.d("intent______ country ", active.country!!.name)
                 }
 
                 return null
@@ -82,7 +85,7 @@ class ReceiverStart : BroadcastReceiver() {
                     sendNotification(
                         "  Discover new country "+ country!!.name ,
                         "  ${country!!.description.subSequence(0,30)} ",
-                        active_con
+                        active_con , country!!.countryId
                     )
                 }
             }
@@ -93,7 +96,7 @@ class ReceiverStart : BroadcastReceiver() {
     }
 
 
-    private fun sendNotification(titre: String, contenu: String, context: Context) {
+    private fun sendNotification(titre: String, contenu: String, context: Context,_id:Int) {
 
 
         val notificationManager =
@@ -107,7 +110,7 @@ class ReceiverStart : BroadcastReceiver() {
             mChannel.description = " this channel is for contact response app "
 
             val intent = Intent(context, CountryDetails::class.java)
-            intent.putExtra("countryId",country?.countryId.toString())
+            intent.putExtra("countryId",_id.toString())
             context.startActivity(intent)
 
             val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
@@ -122,7 +125,7 @@ class ReceiverStart : BroadcastReceiver() {
                     pendingIntent)
 
                 .build()
-            notificationManager.notify(0, noti)
+            notificationManager.notify(_id, noti)
             Log.d("notif", "sent1")
 
         } else {
