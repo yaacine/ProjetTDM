@@ -2,6 +2,7 @@ package com.example.projettdm
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.AsyncTask
@@ -11,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Dao.CountryDAO
 import com.example.projettdm.DataManager.Dao.ImageDAO
@@ -37,7 +37,7 @@ class InformationFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var country_id:Int = 0
+    private var country_id:Int = 1
     private var country: Country? = null
     private var ImagesList : MutableList<Int> = mutableListOf()
 
@@ -96,6 +96,14 @@ class InformationFragment : Fragment() {
                 if(active.country_id>0){
 
                     active.country = active.country_dao?.findById(active.country_id)
+
+                    active.country?.visited = true
+                    active.country?.let {
+                        active.country_dao?.updateCountry(
+                            it
+                        )
+                    }
+
                     active.image_dao?.findBycountry(active.country_id)?.forEach { i->
                         active.ImagesList.add(i.resourceId)
                     }
@@ -141,9 +149,21 @@ class InformationFragment : Fragment() {
 
     }
 
+     /*override fun onSaveInstanceState(outState: Bundle) {
+        // Make sure to call the super method so that the states of our views are saved
+        super.onSaveInstanceState(outState)
+        // Save our own state now
+        outState.putSerializable("courtry", this.ImagesList)
+    }*/
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        btn_back.setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("countryId",country?.countryId.toString())
+            context?.startActivity(intent)
+        }
 
         btn_play.setOnClickListener{
 
@@ -174,17 +194,7 @@ class InformationFragment : Fragment() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
-       /* val uri = uri_from_ressource(R.drawable.dz_2)
-        val uri1 = uri_from_ressource(R.drawable.dz_3)
-
-        var ls = arrayOf(uri.toString(),uri1.toString())
-        slider.setItems(ls.toList())
-        slider.getIndicator() */
-
-    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -251,6 +261,7 @@ class InformationFragment : Fragment() {
             .build()
         return uri1
     }
+
 }
 
 

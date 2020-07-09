@@ -46,11 +46,6 @@
             android:layout_marginLeft="10dp"
             android:text="This is my content area." />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
         <ListView
             android:outlineSpotShadowColor="@color/white"
             android:id="@+id/listView"

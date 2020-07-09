@@ -1,12 +1,25 @@
 package com.example.projettdm
 
-import android.content.Context
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
+import androidx.fragment.app.Fragment
+import com.example.projettdm.Adapters.TweetsListAdapter
+import com.example.projettdm.DataManager.Entities.Country
+import kotlinx.android.synthetic.main.fragment_tweets.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import twitter4j.*
+import twitter4j.Status
+
+import twitter4j.conf.ConfigurationBuilder
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +39,11 @@ class TweetsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    lateinit var tweetsAdapter: TweetsListAdapter
+    private var tweet_list :MutableList<Status> = mutableListOf()
+    private var country_id:Int = 0
+    private var country: Country? = null
+    private var countryName: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +53,103 @@ class TweetsFragment : Fragment() {
         }
     }
 
+    var root: View? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        arguments!!.getInt("country_id").let {it->
+            Log.d(" Country_id_fount",it.toString())
+            this.country_id = it
+
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tweets, container, false)
+        root =inflater.inflate(R.layout.fragment_tweets, container, false)
+       // Toast.makeText(activity, "Error loading the data", Toast.LENGTH_SHORT).show()
+
+        tweetsAdapter = TweetsListAdapter(
+            activity!!,
+            R.layout.row_tweet,
+            tweet_list
+        )
+
+        var listV : ListView = root!!.findViewById(R.id.tweetsList)
+        listV.adapter = tweetsAdapter
+        val active = this ;
+        val luncher = @SuppressLint("StaticFieldLeak")
+        object : AsyncTask<Void, Void, Void>() {
+
+            override fun doInBackground(vararg params: Void?): Void? {
+                //in background
+                //active
+
+                if(active.country_id>0){
+
+                    active.country = DataHolder.dbReference.CountryDao().findById(active.country_id)
+
+                }
+                return null
+            }
+
+            override fun onPostExecute(result: Void?) {
+                println("got country ====>"+active.country?.name)
+
+                active.txt_nom.text= active.country?.name
+
+                val cb = ConfigurationBuilder()
+                cb.setDebugEnabled(true)
+                    .setOAuthConsumerKey("BiTL2ru2EuVMElv7WNU4EJEuf")
+                    .setOAuthConsumerSecret("N4muFKXI0gYJYOvAaLFAClQyf4MX8W7979zNCuAXf3AI2WqbQV")
+                    .setOAuthAccessToken("1059903815921623041-o61IrmoeCRyhobGB9I8DA0RrmaU7ED")
+                    .setOAuthAccessTokenSecret("4UagcnwlsZkEzfyxfGF0MURtyu8x5OEA87ZVRnI7IJ7Ff")
+                val tf = TwitterFactory(cb.build())
+                val twitter: Twitter = tf.getInstance()
+                try {
+                    val query = Query(active.country?.name+" News")
+                    lateinit var result: QueryResult
+                    GlobalScope.launch {
+                        Log.d("getting tweets","tweets ")
+                        result = twitter.search(query)
+                    }.invokeOnCompletion {
+
+                        val tweets: List<twitter4j.Status> = result.getTweets()
+                        active.tweet_list.clear()
+                        for (tweet in tweets) {
+                            DataHolder.tweetsList.add(tweet)
+                            active.tweet_list.add(tweet)
+                            println(
+                                "@" + tweet.getUser().getScreenName().toString() + " - " + tweet.getText() +"==>"
+                            )
+                        }
+
+
+                        // adapter.notifyDataSetChanged()
+
+                        activity!!.runOnUiThread(java.lang.Runnable {
+
+                            active.tweetsAdapter.notifyDataSetChanged()
+                            // adapter.notifyDataSetChanged()
+
+                        })
+
+                    }
+
+
+                } catch (te: TwitterException) {
+                    te.printStackTrace()
+                    System.out.println("Failed to search tweets: " + te.errorMessage)
+                    System.exit(-1)
+                }
+
+            }
+
+        }
+        luncher.execute()
+
+
+        return root
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -48,16 +157,7 @@ class TweetsFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
-    /*
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-    */
+
 
 
     override fun onDetach() {
@@ -99,5 +199,15 @@ class TweetsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btn_back.setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("countryId",country?.countryId.toString())
+            context?.startActivity(intent)
+        }
     }
 }

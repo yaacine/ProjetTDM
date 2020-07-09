@@ -4,6 +4,7 @@ package com.example.projettdm
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_tweets.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -156,6 +158,11 @@ class VideosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        btn_back_vid
+            .setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            context?.startActivity(intent)
+        }
         linear_holder.scrollTo(0,0)
         linear_holder.scrollY = 0
     }
@@ -164,6 +171,7 @@ class VideosFragment : Fragment() {
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
+
 
     /*
     override fun onAttach(context: Context) {
@@ -179,6 +187,7 @@ class VideosFragment : Fragment() {
         myContext = activity as FragmentActivity
 
     }
+
 
     override fun onDetach() {
         super.onDetach()
@@ -220,38 +229,7 @@ class VideosFragment : Fragment() {
                 }
             }
     }
-/*
-    private fun initializeYoutubePlayer() {
 
-        youTubePlayerFragment = fragmentManager
-            ?.findFragmentById(R.id.youtube_player_fragment) as YouTubePlayerSupportFragment
-        if (youTubePlayerFragment == null) return
-        youTubePlayerFragment.initialize(
-            Constants.DEVELOPER_KEY,
-            object : YouTubePlayer.OnInitializedListener {
-                override fun onInitializationSuccess(
-                    provider: YouTubePlayer.Provider, player: YouTubePlayer,
-                    wasRestored: Boolean
-                ) {
-                    if (!wasRestored) {
-                        youTubePlayer = player
 
-                        //set the player style default
-                        youTubePlayer!!.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
 
-                        //cue the 1st video by default
-                        youTubePlayer!!.cueVideo(youtubeVideoArrayList.get(0))
-                    }
-                }
-
-                override fun onInitializationFailure(
-                    arg0: YouTubePlayer.Provider,
-                    arg1: YouTubeInitializationResult
-                ) {
-
-                    //print or show error if initialization failed
-                    Log.e(TAG, "Youtube Player View initialization failed")
-                }
-            })
-    } */
 }

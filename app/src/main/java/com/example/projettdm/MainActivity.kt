@@ -1,24 +1,28 @@
 package com.example.projettdm
 
+import android.content.BroadcastReceiver
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
-
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.projettdm.Adapters.CountryListAdapter
 import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Image
 import com.example.projettdm.DataManager.Entities.Video
 import com.example.projettdm.DataManager.Entities.VideoYoutube
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,33 +31,50 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     lateinit var navView: NavigationView
     lateinit var adapter: CountryListAdapter
 
+    private var list_countries : MutableList<Country> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val filter = IntentFilter(Intent.ACTION_USER_PRESENT)
+        val mReceiver: BroadcastReceiver = ReceiverStart()
+        registerReceiver(mReceiver, filter)
+
 
         val db = AppDatabase(this)
-        populateDatabase(db)
         DataHolder.dbReference = db
+       // populateDatabase(db)
 
-
-        adapter = CountryListAdapter(this, R.layout.row, DataHolder.countriesList)
+        adapter = CountryListAdapter(
+            this,
+            R.layout.row,
+            this.list_countries
+        )
         listView.adapter = adapter
 
-        GlobalScope.launch {
-            var myDataList = db.CountryDao().getAll()
-            DataHolder.countriesList.addAll(myDataList)
-            println("we got our data ===>"+ DataHolder.countriesList.size)
-        }.invokeOnCompletion {
-            adapter.notifyDataSetChanged()
+        nav_view.menu.getItem(0).isChecked = true;
+
+        try {
+            GlobalScope.launch {
+                var myDataList = db.CountryDao().getAll()
+                DataHolder.countriesList.addAll(myDataList)
+                list_countries.clear()
+                list_countries.addAll(myDataList)
+                println("we got our data ===>"+ DataHolder.countriesList.size)
+            }.invokeOnCompletion {
+                adapter.notifyDataSetChanged()
+
+              //  this.runOnUiThread(Runnable { adapter.notifyDataSetChanged() })
+                    // adapter.notifyDataSetChanged()
+            }
+
+        }catch (err:Error){
+            println("Error loading the data")
+            Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
         }
 
-
-
-        button.setOnClickListener {
-            val intent = Intent(this, CountryDetails::class.java)
-            startActivity(intent)
-        }
+        
         toolbar = findViewById(R.id.toolbar)
 
 
@@ -70,64 +91,131 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_all -> {
-                Toast.makeText(this, "All Countries", Toast.LENGTH_SHORT).show()
+
+                try {
+                    GlobalScope.launch {
+                        var myDataList = DataHolder.dbReference.CountryDao().getAll()
+                        DataHolder.countriesList.clear()
+                        DataHolder.countriesList.addAll(myDataList)
+                        list_countries.clear()
+                        list_countries.addAll(myDataList)
+                        println("_________________we got our data ===>")
+                    }.invokeOnCompletion {
+
+                        this.runOnUiThread(Runnable {
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(this, "All Countries", Toast.LENGTH_SHORT).show()
+
+                        })
+
+
+                    }
+
+                }catch (err:Error){
+                    println("Error loading the data")
+                    Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
+                }
             }
             R.id.nav_favorite -> {
-                Toast.makeText(this, "Favorite Countries", Toast.LENGTH_SHORT).show()
+                try {
+                    GlobalScope.launch {
+                        var myDataList = DataHolder.dbReference.CountryDao().getAllFavorites()
+                        DataHolder.countriesList.clear()
+                        DataHolder.countriesList.addAll(myDataList)
+                        list_countries.clear()
+                        list_countries.addAll(myDataList)
+                        println("_________________we got our data ===>")
+                    }.invokeOnCompletion {
+
+                        this.runOnUiThread(Runnable {
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(this, "Favorite Countries", Toast.LENGTH_SHORT).show()
+
+
+                        })
+
+
+                    }
+
+                }catch (err:Error){
+                    println("Error loading the data")
+                    Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
+
+                }
+
             }
             R.id.nav_visited -> {
-                Toast.makeText(this, "Visisted Countries", Toast.LENGTH_SHORT).show()
+                try {
+                    GlobalScope.launch {
+                        var myDataList = DataHolder.dbReference.CountryDao().getAllVisited()
+                        DataHolder.countriesList.clear()
+                        DataHolder.countriesList.addAll(myDataList)
+                        print(myDataList)
+                        list_countries.clear()
+                        list_countries.addAll(myDataList)
+                        println("_________________history ===>")
+                    }.invokeOnCompletion {
+
+                        this.runOnUiThread(Runnable {
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(this, "Visisted Countries", Toast.LENGTH_SHORT).show()
+
+                        })
+
+
+                    }
+
+                }catch (err:Error){
+                    println("Error loading the data")
+                    Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
+
+
+                }
             }
             R.id.nav_share -> {
-                Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Comming soon!", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_about -> {
-                Toast.makeText(this, "Sign out clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Comming soon!", Toast.LENGTH_SHORT).show()
+            }
+            else -> { // Note the block
+                try {
+                    GlobalScope.launch {
+                        var myDataList = DataHolder.dbReference.CountryDao().getAll()
+                        DataHolder.countriesList.clear()
+                        DataHolder.countriesList.addAll(myDataList)
+                        list_countries.clear()
+                        list_countries.addAll(myDataList)
+                        println("_________________we got our data ===>")
+                    }.invokeOnCompletion {
+
+                        this.runOnUiThread(Runnable {
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(this, "All Countries", Toast.LENGTH_SHORT).show()
+
+                        })
+
+
+                    }
+
+                }catch (err:Error){
+                    println("Error loading the data")
+                    Toast.makeText(this, "Error loading the data", Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
-        /*
-          GlobalScope.launch {
-            db.CountryDao().insertAll(Country(name = "Algeria", code = "DZ" ,
-                description = "flutter run " , history = "algeira", visited = false , favorite = false ,
-                flagSrc = "" , hymeSrc = "" ))
-
-            db.CountryDao().insertAll(Country(name = "ksa", code = "DZ" ,
-                description = "flutter run " , history = "algeira", visited = false , favorite = false ,
-                flagSrc = "" , hymeSrc = "" ))
-
-            println("====> data added successfully")
-
-            var data = db.CountryDao().getAll()
-            println("====> data retrieved successfully")
-            data?.forEach {
-                println(it)
-            }
-        }
-        */
-
-
-      //  val iconName = (R.drawable.ic_launcher_background)
-        //println("icon name ===>"+ iconName)
-
-
-        /*button.setOnClickListener {
-
-            val intent = Intent(this, CountryDetails::class.java)
-            startActivity(intent)
-        }*/
-
-
-
-
 
     fun populateDatabase(myDB: AppDatabase){
+
         GlobalScope.launch {
 
             myDB.clearAllTables()
@@ -337,6 +425,8 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             Video(" st petersburg "," hello ",R.raw.russia,"yacine",5),
                 Video(" Djarba "," hello ",R.raw.tunnis,"yacine",2)
             )
+
         }
+
     }
 }

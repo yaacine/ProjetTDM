@@ -50,9 +50,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     kapt "androidx.room:room-compiler:$room_version"
+
     implementation 'androidx.fragment:fragment-ktx:1.0.0'
-
-
     implementation 'io.github.ivanespitiac:imageslider:1.0.3'
+
+    implementation 'org.twitter4j:twitter4j-core:4.0.7'
 
 }
