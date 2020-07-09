@@ -1,8 +1,10 @@
 package com.example.projettdm
 
 
+import android.app.NotificationManager
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -13,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_country_details.*
 class CountryDetails : AppCompatActivity() {
     var navigationView: BottomNavigationView? = null
 
-    var country_id :Int = 4
+    var country_id :Int = 1
 
 
 
@@ -23,8 +25,12 @@ class CountryDetails : AppCompatActivity() {
         setContentView(R.layout.activity_country_details)
         navigationView =findViewById(R.id.bottom_navigation);
 
+        val notig_m : NotificationManager  = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notig_m.cancelAll()
+
         //var i :Intent =getIntent()
         this.country_id = intent.getStringExtra("countryId")?.toInt()!!
+        Log.d("____coutry _ in",this.country_id.toString())
 
         title=resources.getString(R.string.information)
         loadFragment(InformationFragment())

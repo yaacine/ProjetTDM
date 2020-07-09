@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         val db = AppDatabase(this)
         DataHolder.dbReference = db
-        //populateDatabase(db)
+       // populateDatabase(db)
 
         adapter = CountryListAdapter(
             this,

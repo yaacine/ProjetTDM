@@ -3,19 +3,17 @@ package com.example.projettdm
 
 
 import android.annotation.SuppressLint
-import android.provider.Telephony.Sms
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
-import androidx.core.content.ContextCompat
-import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
-import android.provider.ContactsContract
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getSystemService
 import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Dao.CountryDAO
 import com.example.projettdm.DataManager.Entities.Country
@@ -81,6 +79,9 @@ class ReceiverStart : BroadcastReceiver() {
 
             override fun onPostExecute(result: Void?) {
                 if(country!=null){
+                    if(country!!.visited){
+                        return
+                    }
 
                     sendNotification(
                         "  Discover new country "+ country!!.name ,
@@ -109,21 +110,26 @@ class ReceiverStart : BroadcastReceiver() {
             )
             mChannel.description = " this channel is for contact response app "
 
+
+
             val intent = Intent(context, CountryDetails::class.java)
             intent.putExtra("countryId",_id.toString())
-            context.startActivity(intent)
 
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            Log.d("________written___",_id.toString())
+            val pIntent = PendingIntent.getActivity(
+                context, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
             notificationManager.createNotificationChannel(mChannel)
 
             val noti = Notification.Builder(context, channelId)
                 .setContentTitle(titre)
                 .setContentText(contenu).setSmallIcon(android.R.drawable.btn_star)
-                .setAutoCancel(false)
-                .addAction(R.drawable.ic_launcher_background, " view ",
-                    pendingIntent)
-
+                .setAutoCancel(true)
+                .addAction(R.drawable.ic_history_black_24dp, " Voir plus ", pIntent)
+                .setContentIntent(pIntent)
+                .setOngoing(true)
                 .build()
             notificationManager.notify(_id, noti)
             Log.d("notif", "sent1")
