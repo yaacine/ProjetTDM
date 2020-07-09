@@ -1,6 +1,8 @@
 package com.example.projettdm
 
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -9,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.projettdm.Adapters.CountryListAdapter
 import com.example.projettdm.DataManager.AppDatabase
 import com.example.projettdm.DataManager.Entities.Country
 import com.example.projettdm.DataManager.Entities.Image
@@ -19,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,12 +37,20 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val filter = IntentFilter(Intent.ACTION_USER_PRESENT)
+        val mReceiver: BroadcastReceiver = ReceiverStart()
+        registerReceiver(mReceiver, filter)
+
 
         val db = AppDatabase(this)
         DataHolder.dbReference = db
         //populateDatabase(db)
 
-        adapter = CountryListAdapter(this, R.layout.row, this.list_countries)
+        adapter = CountryListAdapter(
+            this,
+            R.layout.row,
+            this.list_countries
+        )
         listView.adapter = adapter
 
         nav_view.menu.getItem(0).isChecked = true;

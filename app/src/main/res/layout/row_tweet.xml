@@ -63,7 +63,7 @@
                     android:layout_marginTop="5px"
                     android:background="@drawable/btn_youtube"
                     android:layout_marginEnd="28dp"
-                    android:textColor="#002148"
+                    android:textColor="#01162E"
                     android:text="Open in Twitter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

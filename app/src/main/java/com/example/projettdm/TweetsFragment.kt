@@ -10,10 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.projettdm.Adapters.TweetsListAdapter
 import com.example.projettdm.DataManager.Entities.Country
-import com.example.projettdm.DataManager.Entities.Tweet
 import kotlinx.android.synthetic.main.fragment_tweets.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -70,7 +69,11 @@ class TweetsFragment : Fragment() {
         root =inflater.inflate(R.layout.fragment_tweets, container, false)
        // Toast.makeText(activity, "Error loading the data", Toast.LENGTH_SHORT).show()
 
-        tweetsAdapter = TweetsListAdapter( activity!!, R.layout.row_tweet, tweet_list)
+        tweetsAdapter = TweetsListAdapter(
+            activity!!,
+            R.layout.row_tweet,
+            tweet_list
+        )
 
         var listV : ListView = root!!.findViewById(R.id.tweetsList)
         listV.adapter = tweetsAdapter

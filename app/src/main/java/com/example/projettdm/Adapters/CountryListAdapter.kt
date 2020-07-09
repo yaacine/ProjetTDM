@@ -1,4 +1,4 @@
-package com.example.projettdm
+package com.example.projettdm.Adapters
 
 
 import android.content.Context
@@ -11,7 +11,11 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.projettdm.CountryDetails
+import com.example.projettdm.DataHolder
 import com.example.projettdm.DataManager.Entities.Country
+import com.example.projettdm.MainActivity
+import com.example.projettdm.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

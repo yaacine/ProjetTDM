@@ -37,7 +37,7 @@ class InformationFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var country_id:Int = 0
+    private var country_id:Int = 1
     private var country: Country? = null
     private var ImagesList : MutableList<Int> = mutableListOf()
 

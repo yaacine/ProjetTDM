@@ -1,4 +1,4 @@
-package com.example.projettdm
+package com.example.projettdm.Adapters
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
+import com.example.projettdm.R
 import twitter4j.Status
 
 

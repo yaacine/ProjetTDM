@@ -17,6 +17,8 @@ interface CountryDAO {
     @Query("SELECT * FROM country WHERE visited = 1")
     fun getAllVisited(): List<Country>
 
+    @Query("select * from country Where visited = 0 limit 1")
+    fun getNewCountry(): List<Country>
 
     @Query("SELECT * FROM country WHERE code LIKE :code")
     fun findBycode(code: String): Country
