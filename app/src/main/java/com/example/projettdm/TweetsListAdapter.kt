@@ -3,17 +3,16 @@ package com.example.projettdm
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.projettdm.DataManager.Entities.Country
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import androidx.core.content.ContextCompat.startActivity
 import twitter4j.Status
+
 
 class TweetsListAdapter(
     var mCtx: Context, var resource: Int,
@@ -35,6 +34,7 @@ class TweetsListAdapter(
         var status: Status? = items[position]
 
 
+
         val uri = R.drawable.ic_iconfinder_icon_white
         val myres: Drawable = mCtx.resources.getDrawable(uri)
         imageView.setColorFilter(R.color.colorPrimary)
@@ -49,6 +49,13 @@ class TweetsListAdapter(
 
         openTwitterBtn.setOnClickListener {
             println("we are deleting some stuff")
+            val url = "https://twitter.com/" + status!!.user.screenName
+                .toString() + "/status/" + status!!.id
+            val viewIntent = Intent(
+                "android.intent.action.VIEW",
+                Uri.parse(url)
+            )
+            context.startActivity(viewIntent)
 
 
 

@@ -142,9 +142,10 @@ class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
                         var myDataList = DataHolder.dbReference.CountryDao().getAllVisited()
                         DataHolder.countriesList.clear()
                         DataHolder.countriesList.addAll(myDataList)
+                        print(myDataList)
                         list_countries.clear()
                         list_countries.addAll(myDataList)
-                        println("_________________we got our data ===>")
+                        println("_________________history ===>")
                     }.invokeOnCompletion {
 
                         this.runOnUiThread(Runnable {

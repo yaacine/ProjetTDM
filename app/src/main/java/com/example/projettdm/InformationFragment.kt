@@ -96,6 +96,14 @@ class InformationFragment : Fragment() {
                 if(active.country_id>0){
 
                     active.country = active.country_dao?.findById(active.country_id)
+
+                    active.country?.visited = true
+                    active.country?.let {
+                        active.country_dao?.updateCountry(
+                            it
+                        )
+                    }
+
                     active.image_dao?.findBycountry(active.country_id)?.forEach { i->
                         active.ImagesList.add(i.resourceId)
                     }

@@ -31,7 +31,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="147dp"
+        android:layout_height="wrap_content"
+        android:minHeight="147dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -60,7 +61,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5px"
+                    android:background="@drawable/btn_youtube"
                     android:layout_marginEnd="28dp"
+                    android:textColor="#002148"
                     android:text="Open in Twitter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
